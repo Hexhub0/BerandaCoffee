@@ -1,4 +1,5 @@
 <?php
+// resources/views/login.blade.php
 ?>
 
 <!DOCTYPE html>
