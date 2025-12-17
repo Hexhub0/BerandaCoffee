@@ -1,0 +1,25 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use Laravel\Fortify\Features;
+
+Route::get('/', function () {
+    return view('app');
+})->name('home');
+
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+Route::get('/menu', function () {
+    return view('menu');
+})->name('menu');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', function () {
+        return Inertia::render('dashboard');
+    })->name('dashboard');
+});
+
+require __DIR__.'/settings.php';
