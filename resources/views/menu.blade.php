@@ -43,7 +43,7 @@
       <a href="#" class="navbar-logo">Beranda<span>Coffee</span>.</a>
 
       <div class="navbar-nav">
-        <a href="#home">Beranda</a>
+        <a href="/home">Beranda</a>
         <a href="#about">Tentang Kami</a>
         <a href="/menu">Menu</a>
         <a href="#products">Produk Kami</a>
