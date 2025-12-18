@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Menu - Beranda Coffee</title>
+    <title>Beranda Coffee</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,7 +26,6 @@
 
     <!-- My Style -->
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/menu.css" />
 
     <!-- Alpine JS -->
     <script
@@ -43,7 +42,7 @@
       <a href="#" class="navbar-logo">Beranda<span>Coffee</span>.</a>
 
       <div class="navbar-nav">
-        <a href="#home">Beranda</a>
+        <a href="/">Beranda</a>
         <a href="#about">Tentang Kami</a>
         <a href="/menu">Menu</a>
         <a href="#products">Produk Kami</a>
@@ -176,9 +175,40 @@
     </section>
     <!-- Hero Section end -->
 
+    <!-- About Section start -->
+    <section id="about" class="about">
+      <h2><span>Tentang</span> Kami</h2>
+
+      <div class="row">
+        <div class="about-img">
+          <img src="img/tentang-kami.jpg" alt="Tentang kami" />
+        </div>
+        <div class="content">
+          <h3>Kenapa Memilih Kopi Kami?</h3>
+          <p>
+            Harga kaki lima kualitas bintang lima dengan rasa yang bisa
+            menggunggah selera, membuat kopi kami menjadi pilihan utama bagi
+            para pecinta kopi.
+          </p>
+          <p>
+            Dibuat dengan menggunakan biji kopi pilihan yang diolah dengan
+            teknik terbaik, dengan sentuhan cinta dan dedikasi, membuat kopi
+            kami memiliki cita rasa yang unik dan memikat. Kami percaya bahwa
+            setiap tegukan kopi kami memberikan pengalaman yang tak terlupakan.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- About Section end -->
+
     <!-- Menu Section start -->
     <section id="menu" class="menu" x-data="products">
-        <h2><span>Menu</span> Kami</h2>
+      <h2><span>Menu</span> Kami</h2>
+        <p>
+          Semoga menu kopi andalan kami dapat menemani hari-hari mu dan memberikan
+          kenikmatan yang tak terlupakan.
+        </p>
+
         <div class="row">
           <template x-for="item in sortedMenuItems" :key="item.id">
             <div class="menu-card">
@@ -300,6 +330,12 @@
     <!-- Products Section start -->
     <section id="products" class="products" x-data="products">
       <h2><span>Produk</span> Kami</h2>
+      <p>
+      Produk unggulan kami berupa biji kopi terbaik yang dipetik dari
+      perkebunan dataran tinggi, menghasilkan cita rasa yang kaya dan aroma
+      yang menggugah selera.
+      </p>
+
       <div class="row">
         <template x-for="item in sortedItems" :key="item.id">
           <div class="product-card">
@@ -402,6 +438,73 @@
         </div>
       </section>
     <!-- Products Section end -->
+
+    <!-- Contact Section start -->
+    <section id="contact" class="contact">
+      <h2><span>Kontak</span> Kami</h2>
+      <p>
+        Saran dan kritik dari Anda sangat berarti bagi kami untuk meningkatkan
+        layanan dan produk kami. Jangan ragu untuk menghubungi kami melalui form
+        di bawah ini.
+      </p>
+
+      <div class="row">
+        <div class="contact-container">
+          <div class="form-container">
+            <h3>Kirim Ulasan</h3>
+            <form action="" id="ulasanForm">
+              <div class="input-group">
+                <i data-feather="user"></i>
+                <input
+                  type="text"
+                  placeholder="Nama Lengkap"
+                  id="ulasanName"
+                  required
+                />
+                <span class="input-focus"></span>
+              </div>
+              <div class="input-group">
+                <i data-feather="mail"></i>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  id="ulasanEmail"
+                  required
+                />
+                <span class="input-focus"></span>
+              </div>
+              <div class="input-group-3">
+                <i data-feather="message-square"></i>
+                <textarea
+                  placeholder="Kirim Ulasan Anda Di Sini"
+                  id="ulasanText"
+                  required
+                ></textarea>
+                <span class="input-focus"></span>
+              </div>
+              <button type="submit" class="btn" id="btnUlasan">
+                <i data-feather="send"></i>
+                Kirim Ulasan
+              </button>
+            </form>
+          </div>
+
+          <div class="map-container">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.184885024379!2d112.71637438561984!3d-7.333122273329611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb7aa0e99023%3A0xc98468576e20f7fc!2sBeranda%20Kita%20(Kos%20dan%20Kedai%20Kopi)!5e0!3m2!1sid!2sid!4v1763293534996!5m2!1sid!2sid"
+              width="100%"
+              height="100%"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              class="map"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact Section end -->
 
     <!-- Footer start -->
     <footer class="footer">
@@ -582,6 +685,5 @@
 
     <!-- My Javascript -->
     <script src="/js/script.js"></script>
-    <script src="/js/menu.js"></script>
   </body>
 </html>
