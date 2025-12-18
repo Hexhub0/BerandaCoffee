@@ -320,7 +320,7 @@ body {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: url("public/img/header-bg-1.jpg");
+  background-image: url("/img/header-bg-1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -398,7 +398,7 @@ body {
 
 .about .row .about-img img {
   width: 100%;
-  -webkit-mask-image: url("../img/menu/coffe-beans-1.svg");
+  -webkit-mask-image: url("/img/menu/coffe-beans-1.svg");
   -webkit-mask-size: 50%;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
