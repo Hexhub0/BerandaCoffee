@@ -1,5 +1,5 @@
 <?php
-
+// resources/views/app.blade.php
 ?>
 
 <!DOCTYPE html>
