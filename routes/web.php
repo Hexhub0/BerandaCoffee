@@ -28,6 +28,15 @@ Route::get('/admin_transaksi', function () {
     return view('admin.admin_transaksi');
 })->name('admin.transaksi');
 
+Route::get('/admin', function () {
+    return view('admin.admin', [
+        'totalMenu' => 0,
+        'todayOrders' => 0,
+        'completedOrders' => 0,
+        'pendingOrders' => 0,
+    ]);
+})->name('admin.dashboard');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
