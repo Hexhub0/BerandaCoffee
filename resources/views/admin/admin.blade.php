@@ -1,4 +1,12 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  @extends('layouts.app')
 
 @section('content')
 <div class="admin-container">
@@ -29,8 +37,12 @@
   <hr>
 
   <div class="admin-links">
-    <a href="{{ route('admin.menu') }}">Kelola Menu</a>
-    <a href="{{ route('admin.transaksi') }}">Kelola Transaksi</a>
+    <a href="{{ route('admin_menu') }}">Kelola Menu</a>
+    <a href="{{ route('admin_transaksi') }}">Kelola Transaksi</a>
   </div>
 </div>
 @endsection
+
+</body>
+</html>
+
