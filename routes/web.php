@@ -16,6 +16,18 @@ Route::get('/menu', function () {
     return view('menu');
 })->name('menu');
 
+Route::get('/admin', function () {
+    return view('admin.admin');
+})->name('admin.dashboard');
+
+Route::get('/admin_menu', function () {
+    return view('admin.admin_menu');
+})->name('admin.menu');
+
+Route::get('/admin_transaksi', function () {
+    return view('admin.admin_transaksi');
+})->name('admin.transaksi');
+
 Route::middleware(['auth','admin'])->group(function () {
   Route::get('/admin', fn () => view('admin.admin'))->name('admin.dashboard');
   Route::get('/admin/menu', fn () => view('admin.admin_menu'))->name('admin.menu');
