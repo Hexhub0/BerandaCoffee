@@ -37,8 +37,8 @@
   <hr>
 
   <div class="admin-links">
-    <a href="{{ route('admin_menu') }}">Kelola Menu</a>
-    <a href="{{ route('admin_transaksi') }}">Kelola Transaksi</a>
+    <a href="/admin_menu">Kelola Menu</a>
+    <a href="/admin_transaksi">Kelola Transaksi</a>
   </div>
 </div>
 @endsection
