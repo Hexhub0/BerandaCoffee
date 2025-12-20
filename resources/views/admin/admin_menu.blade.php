@@ -1,34 +1,23 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="admin-container">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="admin-container">
   <h1>Kelola Menu</h1>
-
-  <a href="{{ route('admin.menu.create') }}" class="btn-primary">
-    + Tambah Menu
+  <a href="/admin_menu/tambah" class="btn-primary">
+    Tambah Menu
   </a>
+  <a href="/admin_menu/edit" class="btn-primary">
+    Edit Menu
+  </a>
+  <a href="/admin_menu/hapus" class="btn-primary">
+    Hapus Menu
+  </a>
+  </div>
 
-  <table class="admin-table">
-    <thead>
-      <tr>
-        <th>Nama Menu</th>
-        <th>Harga</th>
-        <th>Terakhir Diubah</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach($menus as $menu)
-      <tr>
-        <td>{{ $menu->name }}</td>
-        <td>Rp {{ number_format($menu->price) }}</td>
-        <td>{{ $menu->updated_at->format('d M Y H:i') }}</td>
-        <td>
-          <a href="{{ route('admin.menu.edit', $menu->id) }}">Edit</a>
-        </td>
-      </tr>
-      @endforeach
-    </tbody>
-  </table>
-</div>
-@endsection
+</body>
+</html>
