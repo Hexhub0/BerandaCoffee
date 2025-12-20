@@ -16,6 +16,10 @@ Route::get('/menu', function () {
     return view('menu');
 })->name('menu');
 
+Route::get('/admin', function () {
+    return view('admin');
+})->name('admin');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
