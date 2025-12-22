@@ -76,10 +76,6 @@
         </main>
     </div>
 
-    <footer class="admin-footer">
-        <p>&copy; 2025 Restaurant Management System</p>
-    </footer>
-
     <!-- Modal untuk alasan penolakan -->
     <div id="rejectModal" class="modal" style="display: none;">
         <div class="modal-content">

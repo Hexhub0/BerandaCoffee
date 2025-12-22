@@ -136,10 +136,6 @@
         </main>
     </div>
 
-    <footer class="admin-footer">
-        <p>&copy; 2025 Restaurant Management System</p>
-    </footer>
-
     <!-- Modal Detail Transaksi -->
     <div id="detailModal" class="modal" style="display: none;">
         <div class="modal-content detail-modal">
