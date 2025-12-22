@@ -1,5 +1,38 @@
 <?php
-// resources/views/app.blade.php
+  session_start();
+
+if(isset($_SESSION['islogin'])) {
+    header('location:home.blade.php');
+}
+
+if(isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    echo $email . " " . $password;
+
+    $koneksi = mysqli_connect('localhost', 'root', '', 'u705926806_berandacoffee');
+    
+    $stmt = mysqli_prepare($koneksi, "SELECT password FROM users WHERE email= ?");
+    mysqli_stmt_bind_param($stmt, "s", $email);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $password_db);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    if($password_db && password_verify($password, $password_db)) {
+        $_SESSION['islogin'] = true;
+        $_SESSION['users'] = $email;
+        header('location:home.blade.php');
+        if($role === 'admin') {
+            $_SESSION['isadmin'] = true;
+            header('location:admin.blade.php');
+        }
+        exit();
+    } else {
+        echo "Login Gagal!";
+    }
+
+}
 ?>
 
 <!DOCTYPE html>
