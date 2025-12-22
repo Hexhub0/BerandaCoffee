@@ -8,9 +8,10 @@ if(isset($_SESSION['islogin'])) {
 if(isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $role = $_POST['role'];
     echo $email . " " . $password;
 
-    $koneksi = mysqli_connect('localhost', 'root', '', 'u705926806_berandacoffee');
+    $koneksi = mysqli_connect('https://berandacoffee.site/', 'root', '', 'u705926806_berandacoffee');
     
     $stmt = mysqli_prepare($koneksi, "SELECT password FROM users WHERE email= ?");
     mysqli_stmt_bind_param($stmt, "s", $email);
