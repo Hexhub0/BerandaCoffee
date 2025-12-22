@@ -20,6 +20,16 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Test User',
                 'password' => 'password',
+                'role' => 'user',
+            ]
+        );
+
+         User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Test Admin',
+                'password' => 'password',
+                'role' => 'admin',
             ]
         );
     }
