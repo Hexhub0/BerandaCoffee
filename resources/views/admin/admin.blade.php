@@ -42,7 +42,7 @@
                         <span class="admin-name">{{ Auth::user()->name ?? 'Super Admin' }}</span>
                     </div>
                 </div>
-                <a href="#" class="logout-btn" onclick="logout()">
+                <a href="/" class="logout-btn">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
