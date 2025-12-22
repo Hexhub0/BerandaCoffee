@@ -31,7 +31,7 @@ Route::get('/admin/transaksi', function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     
     // Dashboard Admin
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin', [AdminController::class, 'admin'])->name('admin.dashboard');
     
     // Manajemen User
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
