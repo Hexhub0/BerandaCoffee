@@ -27,3 +27,9 @@ Route::get('/admin/menu', function () {
 Route::get('/admin/transaksi', function () {
     return view('admin.transaksi.admin_transaksi');
 });
+
+// Contoh route dengan middleware auth dan admin
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    // route admin lainnya...
+});
