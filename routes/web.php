@@ -28,8 +28,28 @@ Route::get('/admin/transaksi', function () {
     return view('admin.transaksi.admin_transaksi');
 });
 
-// Contoh route dengan middleware auth dan admin
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    // route admin lainnya...
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    
+    // Dashboard Admin
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    
+    // Manajemen User
+    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+    
+    // Tambahkan route admin lainnya di sini...
+    
 });
+
+// ===== ROUTE UNTUK MENGUJI ROLE =====
+Route::get('/check-role', function () {
+    if (auth()->check()) {
+        $user = auth()->user();
+        return response()->json([
+            'name' => $user->name,
+            'email' => $user->email,
+            'role' => $user->role,
+            'is_admin' => $user->role === 'admin'
+        ]);
+    }
+    return response()->json(['message' => 'Not authenticated']);
+})->middleware('auth');
