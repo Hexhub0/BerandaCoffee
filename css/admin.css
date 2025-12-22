@@ -1,8 +1,8 @@
 :root {
-    --cafe-brown: rgb(182, 137, 91);
+    --cafe-brown: #b6895b;
     --cafe-light: #D2B48C;
     --cafe-cream: #FFF8DC;
-    --cafe-dark: rgb(182, 137, 91);
+    --cafe-dark: #b6895b;
     --success: #28a745;
     --warning: #ffc107;
     --danger: #dc3545;
