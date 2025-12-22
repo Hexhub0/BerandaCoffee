@@ -1,8 +1,9 @@
 :root {
+    --primary: #b6895b;
     --cafe-brown: #b6895b;
-    --cafe-light: #D2B48C;
+    --cafe-light: #d4a574;
     --cafe-cream: #FFF8DC;
-    --cafe-dark: #b6895b;
+    --cafe-dark: #8b5a2b;
     --success: #28a745;
     --warning: #ffc107;
     --danger: #dc3545;
@@ -21,7 +22,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, var(--cafe-cream) 0%, #f5f5dc 100%);
-    color: #333;
+    color: #1c130f;
     min-height: 100vh;
 }
 
@@ -33,7 +34,7 @@ body {
 /* Sidebar Styles */
 .sidebar {
     width: 250px;
-    background: var(--cafe-brown);
+    background: linear-gradient(135deg, var(--primary), var(--cafe-dark));
     color: white;
     display: flex;
     flex-direction: column;
@@ -59,7 +60,7 @@ body {
 }
 
 .sidebar-header i {
-    color: var(--cafe-light);
+    color: var(--cafe-cream);
 }
 
 .mobile-menu-toggle {
@@ -99,13 +100,13 @@ body {
 .sidebar-menu a:hover {
     background: rgba(255,255,255,0.1);
     color: white;
-    border-left-color: var(--cafe-light);
+    border-left-color: var(--cafe-cream);
 }
 
 .sidebar-menu a.active {
     background: rgba(255,255,255,0.15);
     color: white;
-    border-left-color: var(--cafe-light);
+    border-left-color: var(--cafe-cream);
 }
 
 .sidebar-menu i {
@@ -127,7 +128,7 @@ body {
 
 .admin-info i {
     font-size: 2.5rem;
-    color: var(--cafe-light);
+    color: var(--cafe-cream);
 }
 
 .admin-name {
@@ -150,12 +151,14 @@ body {
     color: white;
     text-decoration: none;
     border-radius: 5px;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .logout-btn:hover {
     background: rgba(255,255,255,0.2);
+    transform: translateY(-2px);
 }
 
 /* Main Content */
@@ -168,12 +171,12 @@ body {
 .dashboard-header {
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 2px solid var(--cafe-light);
+    border-bottom: 2px solid var(--primary);
 }
 
 .dashboard-header h1 {
     font-family: 'Playfair Display', serif;
-    color: var(--cafe-dark);
+    color: var(--primary);
     font-size: 2rem;
     display: flex;
     align-items: center;
@@ -191,9 +194,9 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: var(--cafe-dark);
+    color: var(--primary);
     font-size: 0.9rem;
-    background: rgba(139, 69, 19, 0.1);
+    background: rgba(182, 137, 91, 0.1);
     padding: 8px 12px;
     border-radius: 5px;
     display: inline-block;
@@ -207,7 +210,7 @@ body {
 
 .loading-spinner {
     font-size: 3rem;
-    color: var(--cafe-light);
+    color: var(--primary);
     margin-bottom: 20px;
     animation: spin 2s linear infinite;
 }
@@ -239,13 +242,13 @@ body {
 
 .empty-icon {
     font-size: 4rem;
-    color: var(--cafe-light);
+    color: var(--primary);
     margin-bottom: 20px;
     opacity: 0.7;
 }
 
 .empty-state h3 {
-    color: var(--cafe-dark);
+    color: var(--primary);
     margin-bottom: 10px;
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
@@ -263,7 +266,7 @@ body {
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: var(--cafe-brown);
+    background: linear-gradient(135deg, var(--primary), var(--cafe-dark));
     color: white;
     border: none;
     border-radius: 5px;
@@ -274,9 +277,8 @@ body {
 }
 
 .btn-refresh:hover {
-    background: var(--cafe-dark);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(139, 69, 19, 0.2);
+    box-shadow: 0 5px 15px rgba(182, 137, 91, 0.3);
 }
 
 /* Table Styles */
@@ -299,7 +301,7 @@ body {
 }
 
 .pending-table thead {
-    background: var(--cafe-brown);
+    background: linear-gradient(135deg, var(--primary), var(--cafe-dark));
     color: white;
 }
 
@@ -330,7 +332,7 @@ body {
 }
 
 .order-id strong {
-    color: var(--cafe-dark);
+    color: var(--primary);
     font-size: 1.1rem;
     display: block;
     margin-bottom: 5px;
@@ -345,7 +347,7 @@ body {
 .customer-info strong {
     display: block;
     margin-bottom: 5px;
-    color: var(--cafe-dark);
+    color: var(--primary);
 }
 
 .customer-info small {
@@ -355,7 +357,7 @@ body {
 
 .total-amount {
     font-weight: 600;
-    color: var(--cafe-dark);
+    color: var(--primary);
     font-size: 1.1rem;
 }
 
@@ -439,7 +441,7 @@ body {
 }
 
 .table-footer p strong {
-    color: var(--cafe-dark);
+    color: var(--primary);
 }
 
 .btn-refresh-table {
@@ -448,8 +450,8 @@ body {
     gap: 8px;
     padding: 8px 15px;
     background: white;
-    color: var(--cafe-brown);
-    border: 1px solid var(--cafe-light);
+    color: var(--primary);
+    border: 1px solid var(--primary);
     border-radius: 5px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -458,14 +460,15 @@ body {
 }
 
 .btn-refresh-table:hover {
-    background: var(--cafe-light);
+    background: var(--primary);
+    color: white;
     transform: translateY(-2px);
 }
 
 /* Footer */
 .admin-footer {
     height: 60px;
-    background: var(--cafe-dark);
+    background: linear-gradient(135deg, var(--primary), var(--cafe-dark));
     color: white;
     display: flex;
     align-items: center;
@@ -613,10 +616,6 @@ body {
     }
 }
 
-
-
-
-
 /* Transaksi Page Specific Styles */
 
 /* Filter Section */
@@ -651,7 +650,7 @@ body {
 
 .filter-item label {
     display: block;
-    color: var(--cafe-dark);
+    color: var(--primary);
     font-weight: 500;
     margin-bottom: 8px;
     font-size: 0.9rem;
@@ -673,8 +672,8 @@ body {
 
 .filter-input:focus, .filter-select:focus {
     outline: none;
-    border-color: var(--cafe-brown);
-    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(182, 137, 91, 0.1);
 }
 
 .search-group {
@@ -709,7 +708,7 @@ body {
 
 .search-box input:focus {
     outline: none;
-    border-color: var(--cafe-brown);
+    border-color: var(--primary);
 }
 
 .btn-search, .btn-reset, .btn-export, .btn-print {
@@ -725,13 +724,13 @@ body {
 }
 
 .btn-search {
-    background: var(--cafe-brown);
+    background: linear-gradient(135deg, var(--primary), var(--cafe-dark));
     color: white;
 }
 
 .btn-search:hover {
-    background: var(--cafe-dark);
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(182, 137, 91, 0.3);
 }
 
 .btn-reset {
@@ -781,11 +780,11 @@ body {
 }
 
 .stat-icon.total {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--cafe-dark) 100%);
 }
 
 .stat-icon.revenue {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(135deg, var(--cafe-light) 0%, var(--primary) 100%);
 }
 
 .stat-icon.completed {
@@ -798,7 +797,7 @@ body {
 
 .stat-info h3 {
     font-size: 1.5rem;
-    color: var(--cafe-dark);
+    color: var(--primary);
     margin-bottom: 5px;
 }
 
@@ -823,7 +822,7 @@ body {
 }
 
 .transaction-table thead {
-    background: var(--cafe-brown);
+    background: linear-gradient(135deg, var(--primary), var(--cafe-dark));
     color: white;
 }
 
@@ -967,6 +966,7 @@ body {
 .pagination-btn:hover:not(:disabled) {
     background: var(--cafe-cream);
     transform: translateY(-2px);
+    border-color: var(--primary);
 }
 
 .pagination-btn:disabled {
@@ -981,7 +981,7 @@ body {
 
 .page-info span {
     font-weight: 600;
-    color: var(--cafe-dark);
+    color: var(--primary);
 }
 
 /* Export Section */
@@ -1035,12 +1035,12 @@ body {
     align-items: center;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 2px solid var(--cafe-light);
+    border-bottom: 2px solid var(--primary);
 }
 
 .invoice-info h4 {
     font-size: 1.5rem;
-    color: var(--cafe-dark);
+    color: var(--primary);
     margin-bottom: 5px;
 }
 
@@ -1062,7 +1062,7 @@ body {
 }
 
 .invoice-section h5 {
-    color: var(--cafe-dark);
+    color: var(--primary);
     margin-bottom: 10px;
     display: flex;
     align-items: center;
@@ -1075,13 +1075,13 @@ body {
 }
 
 .invoice-section strong {
-    color: var(--cafe-dark);
+    color: var(--primary);
     display: inline-block;
     min-width: 100px;
 }
 
 .invoice-items h5 {
-    color: var(--cafe-dark);
+    color: var(--primary);
     margin-bottom: 15px;
     display: flex;
     align-items: center;
@@ -1106,7 +1106,7 @@ body {
 
 .items-table th {
     font-weight: 500;
-    color: var(--cafe-dark);
+    color: var(--primary);
 }
 
 .items-table tfoot {
