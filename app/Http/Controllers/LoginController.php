@@ -20,7 +20,7 @@ class LoginController extends Controller
     {
         // Redirect berdasarkan role
         if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.admin');
         }
         
         // Untuk user biasa, redirect ke home

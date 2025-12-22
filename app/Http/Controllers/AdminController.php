@@ -9,9 +9,9 @@ class AdminController extends Controller
     /**
      * Tampilkan dashboard admin
      */
-    public function dashboard()
+    public function admin()
     {
-        return view('admin.dashboard');
+        return view('admin.admin');
     }
     
     /**
