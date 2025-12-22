@@ -129,9 +129,6 @@
 
             <!-- Export Options -->
             <div class="export-section">
-                <button class="btn-export" onclick="exportToExcel()">
-                    <i class="fas fa-file-excel"></i> Export ke Excel
-                </button>
                 <button class="btn-print" onclick="printReport()">
                     <i class="fas fa-print"></i> Cetak Laporan
                 </button>

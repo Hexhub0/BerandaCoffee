@@ -109,7 +109,7 @@ function renderPurchases(purchases) {
                 </tbody>
             </table>
             <div class="table-footer">
-                <p>Total: <strong>${purchases.length}</strong> pembelian menunggu approval</p>
+                <p>Total: <strong>${purchases.length}</strong> pembelian menunggu persetujuan</p>
                 <button class="btn-refresh-table" onclick="loadPurchases()">
                     <i class="fas fa-sync-alt"></i> Refresh Data
                 </button>
@@ -128,7 +128,7 @@ function renderEmptyState() {
             <div class="empty-icon">
                 <i class="fas fa-shopping-cart"></i>
             </div>
-            <h3>Tidak ada pembelian yang menunggu approval</h3>
+            <h3>Tidak ada pembelian yang menunggu persetujuan</h3>
             <p>Belum ada pesanan yang membutuhkan persetujuan. Silakan cek kembali nanti.</p>
             <button class="btn-refresh" onclick="loadPurchases()">
                 <i class="fas fa-sync-alt"></i> Refresh
@@ -344,110 +344,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Tambahan CSS untuk modal
-const modalStyles = document.createElement('style');
-modalStyles.textContent = `
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1001;
-    }
-    
-    .modal-content {
-        background: white;
-        border-radius: 10px;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        animation: slideIn 0.3s ease;
-    }
-    
-    @keyframes slideIn {
-        from { transform: translateY(-50px); opacity: 0; }
-        to { transform: translateY(0); opacity: 1; }
-    }
-    
-    .modal-header {
-        padding: 20px;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .modal-header h3 {
-        margin: 0;
-        color: var(--cafe-dark);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    
-    .modal-close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--gray-dark);
-    }
-    
-    .modal-body {
-        padding: 20px;
-    }
-    
-    .modal-body textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid var(--gray-medium);
-        border-radius: 5px;
-        font-family: 'Poppins', sans-serif;
-        font-size: 14px;
-        resize: vertical;
-        margin-top: 10px;
-    }
-    
-    .modal-footer {
-        padding: 20px;
-        border-top: 1px solid #eee;
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-    }
-    
-    .btn-cancel, .btn-submit {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-cancel {
-        background: var(--gray-medium);
-        color: var(--gray-dark);
-    }
-    
-    .btn-cancel:hover {
-        background: var(--gray-dark);
-        color: white;
-    }
-    
-    .btn-submit {
-        background: var(--danger);
-        color: white;
-    }
-    
-    .btn-submit:hover {
-        background: #c82333;
-        transform: translateY(-2px);
-    }
-`;
-document.head.appendChild(modalStyles);
