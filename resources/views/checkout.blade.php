@@ -1690,7 +1690,7 @@
         notification.classList.remove("show");
 
         // Redirect to order history
-        window.location.href = "order-history.html";
+        window.location.href = "/order";
       }
 
       function saveOrderHistory() {
