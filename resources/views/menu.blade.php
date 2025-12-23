@@ -44,8 +44,8 @@
       <div class="navbar-nav">
         <a href="/home">Beranda</a>
         <a href="/menu">Menu</a>
-        <a href="/products">Produk Kami</a>
-        <a href="order-history.html">Riwayat Pesanan</a>
+        <a href="/produk">Produk Kami</a>
+        <a href="/order">Riwayat Pesanan</a>
       </div>
 
       <div class="navbar-extra">
@@ -123,7 +123,7 @@
           "
         >
           <a
-            href="checkout.html"
+            href="/checkout"
             class="checkout-button-link"
             style="
               display: inline-block;
@@ -337,7 +337,7 @@
             <li><a href="/home">Beranda</a></li>
             <li><a href="/home#about">Tentang Kami</a></li>
             <li><a href="/menu">Menu</a></li>
-            <li><a href="/products">Produk Kami</a></li>
+            <li><a href="/produk">Produk Kami</a></li>
             <li><a href="/home#contact">Kontak</a></li>
           </ul>
         </div>

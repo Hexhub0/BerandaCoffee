@@ -15,6 +15,10 @@ Route::get('/menu', function () {
     return view('menu');
 })->name('menu');
 
+Route::get('/produk', function () {
+    return view('produk');
+})->name('produk');
+
 Route::get('/order', function () {
     return view('order-history');
 })->name('order history');

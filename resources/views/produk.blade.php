@@ -44,8 +44,8 @@
       <div class="navbar-nav">
         <a href="/home">Beranda</a>
         <a href="/menu">Menu</a>
-        <a href="/products">Produk Kami</a>
-        <a href="/order-history">Riwayat Pesanan</a>
+        <a href="/produk">Produk Kami</a>
+        <a href="/order">Riwayat Pesanan</a>
       </div>
 
       <div class="navbar-extra">
