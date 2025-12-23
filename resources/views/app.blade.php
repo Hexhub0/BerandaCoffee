@@ -916,7 +916,7 @@
             );
 
             setTimeout(() => {
-              window.location.href = "index.html";
+              window.location.href = "/home";
             }, 2000);
           }, 1500);
         });
