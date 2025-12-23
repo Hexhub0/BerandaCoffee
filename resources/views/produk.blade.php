@@ -123,7 +123,7 @@
           "
         >
           <a
-            href="checkout.html"
+            href="/checkout"
             class="checkout-button-link"
             style="
               display: inline-block;
