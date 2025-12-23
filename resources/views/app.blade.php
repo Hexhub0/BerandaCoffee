@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Beranda Coffee</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,10 +12,8 @@
       rel="stylesheet"
     />
 
-    <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
 
-    <!-- My Style -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
     <style>
       .login-page {
@@ -344,7 +341,6 @@
         text-decoration: underline;
       }
 
-      /* Modal Styles */
       .modal {
         display: none;
         position: fixed;
@@ -429,7 +425,6 @@
         display: block;
       }
 
-      /* Background Credit */
       .bg-credit {
         position: absolute;
         bottom: 10px;
@@ -448,7 +443,6 @@
         background: rgba(0, 0, 0, 0.5);
       }
 
-      /* Responsive */
       @media (max-width: 768px) {
         .login-container {
           padding: 2.5rem;
@@ -501,7 +495,6 @@
         }
       }
 
-      /* Loading state */
       .loading {
         position: relative;
         pointer-events: none;
@@ -532,7 +525,6 @@
     </style>
   </head>
   <body>
-    <!-- Login Page -->
     <div class="login-page">
       <a
         href="https://unsplash.com/photos/brown-coffee-beans-on-white-ceramic-bowl-1495474472287"
@@ -604,7 +596,6 @@
       </div>
     </div>
 
-    <!-- Register Modal -->
     <div id="registerModal" class="modal">
       <div class="modal-content">
         <button class="close-modal" id="closeRegister">&times;</button>
@@ -711,7 +702,6 @@
       </div>
     </div>
 
-    <!-- Forgot Password Modal -->
     <div id="forgotPasswordModal" class="modal">
       <div class="modal-content">
         <button class="close-modal" id="closeForgotPassword">&times;</button>
@@ -766,7 +756,6 @@
     <script>
       feather.replace();
 
-      // Modal Functionality
       const registerModal = document.getElementById("registerModal");
       const forgotPasswordModal = document.getElementById(
         "forgotPasswordModal"
@@ -779,14 +768,12 @@
       );
       const backToLogin = document.getElementById("backToLogin");
 
-      // Form message elements
       const formMessage = document.getElementById("formMessage");
       const registerMessage = document.getElementById("registerMessage");
       const forgotPasswordMessage = document.getElementById(
         "forgotPasswordMessage"
       );
 
-      // Show message function
       function showMessage(element, message, type) {
         element.textContent = message;
         element.className = `form-message ${type}`;
@@ -799,21 +786,18 @@
         }
       }
 
-      // Open Register Modal
       registerLink.addEventListener("click", function (e) {
         e.preventDefault();
         registerModal.style.display = "block";
         registerMessage.style.display = "none";
       });
 
-      // Open Forgot Password Modal
       forgotPasswordLink.addEventListener("click", function (e) {
         e.preventDefault();
         forgotPasswordModal.style.display = "block";
         forgotPasswordMessage.style.display = "none";
       });
 
-      // Close Modals
       closeRegister.addEventListener("click", function () {
         registerModal.style.display = "none";
       });
@@ -822,13 +806,11 @@
         forgotPasswordModal.style.display = "none";
       });
 
-      // Back to Login from Forgot Password
       backToLogin.addEventListener("click", function (e) {
         e.preventDefault();
         forgotPasswordModal.style.display = "none";
       });
 
-      // Close modal when clicking outside
       window.addEventListener("click", function (e) {
         if (e.target === registerModal) {
           registerModal.style.display = "none";
@@ -838,7 +820,6 @@
         }
       });
 
-      // Phone number formatting
       function formatPhoneNumber(inputId) {
         const input = document.getElementById(inputId);
         if (input) {
@@ -857,7 +838,6 @@
 
       formatPhoneNumber("regPhone");
 
-      // Loading state function
       function setLoading(button, isLoading) {
         if (isLoading) {
           button.classList.add("loading");
@@ -868,7 +848,6 @@
         }
       }
 
-      // Form validation and submission
       document
         .getElementById("loginForm")
         .addEventListener("submit", function (e) {
@@ -878,7 +857,6 @@
           const password = document.getElementById("password").value;
           const submitBtn = document.getElementById("loginSubmit");
 
-          // Validation
           if (!email || !password) {
             showMessage(formMessage, "Harap lengkapi semua field!", "error");
             return;
@@ -903,10 +881,8 @@
             return;
           }
 
-          // Set loading state
           setLoading(submitBtn, true);
 
-          // Simulate API call
           setTimeout(() => {
             setLoading(submitBtn, false);
             showMessage(
@@ -921,7 +897,6 @@
           }, 1500);
         });
 
-      // Register Form
       document
         .getElementById("registerForm")
         .addEventListener("submit", function (e) {
@@ -936,7 +911,6 @@
             document.getElementById("regConfirmPassword").value;
           const submitBtn = document.getElementById("registerSubmit");
 
-          // Validation
           if (
             !name ||
             !email ||
@@ -991,10 +965,8 @@
             return;
           }
 
-          // Set loading state
           setLoading(submitBtn, true);
 
-          // Simulate API call
           setTimeout(() => {
             setLoading(submitBtn, false);
             showMessage(
@@ -1010,7 +982,6 @@
           }, 1500);
         });
 
-      // Forgot Password Form
       document
         .getElementById("forgotPasswordForm")
         .addEventListener("submit", function (e) {
@@ -1038,10 +1009,8 @@
             return;
           }
 
-          // Set loading state
           setLoading(submitBtn, true);
 
-          // Simulate API call
           setTimeout(() => {
             setLoading(submitBtn, false);
             showMessage(
@@ -1057,7 +1026,6 @@
           }, 1500);
         });
 
-      // Real-time validation
       document.querySelectorAll("input").forEach((input) => {
         input.addEventListener("blur", function () {
           if (this.value.trim() === "") {
@@ -1070,7 +1038,6 @@
         });
       });
 
-      // Initialize feather icons when modals open
       registerLink.addEventListener("click", function () {
         setTimeout(() => feather.replace(), 100);
       });
