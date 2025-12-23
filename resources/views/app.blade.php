@@ -17,7 +17,7 @@
     <script src="https://unpkg.com/feather-icons"></script>
 
     <!-- My Style -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="css/style.css" />
     <style>
       .login-page {
         min-height: 100vh;
@@ -916,7 +916,7 @@
             );
 
             setTimeout(() => {
-              window.location.href = "{{ route('home') }}";
+              window.location.href = "index.html";
             }, 2000);
           }, 1500);
         });

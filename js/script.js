@@ -48,9 +48,9 @@ document.addEventListener("click", function (e) {
     navbarNav.classList.remove("active");
   }
 
-  if (!isClickSearchForm && !isClickSearchButton && searchForm) {
-    searchForm.classList.remove("active");
-  }
+  // if (!isClickSearchForm && !isClickSearchButton && searchForm) {
+  //   searchForm.classList.remove("active");
+  // }
 
   if (!isClickCart && !isClickCartButton && shoppingCart) {
     shoppingCart.classList.remove("active");
@@ -369,5 +369,315 @@ document.addEventListener("click", function (e) {
     if (modal) {
       modal.style.display = "none";
     }
+  }
+});
+
+// Enhanced Search Functionality
+// Tambahkan kode ini ke dalam script.js Anda
+
+// Search functionality with navigation
+if (searchBox) {
+  let searchTimeout;
+
+  searchBox.addEventListener("input", function (e) {
+    const searchTerm = e.target.value.toLowerCase().trim();
+
+    // Clear previous timeout
+    clearTimeout(searchTimeout);
+
+    // Debounce search (tunggu 500ms setelah user berhenti mengetik)
+    searchTimeout = setTimeout(() => {
+      if (searchTerm.length > 0) {
+        performSearch(searchTerm, false); // false = jangan tutup search form
+      }
+    }, 500);
+  });
+
+  // Search on Enter key
+  searchBox.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const searchTerm = e.target.value.toLowerCase().trim();
+      if (searchTerm.length > 0) {
+        performSearch(searchTerm, false); // false = jangan tutup search form
+      }
+    }
+  });
+
+  // Prevent search form from closing when typing
+  searchBox.addEventListener("focus", function () {
+    if (searchForm) {
+      searchForm.classList.add("active");
+    }
+  });
+}
+
+// Function to perform search
+function performSearch(searchTerm, closeSearch = false) {
+  console.log("Searching for:", searchTerm);
+
+  // Get all items from Alpine.js store
+  if (typeof Alpine === "undefined") {
+    console.error("Alpine.js not loaded");
+    return;
+  }
+
+  // Wait for Alpine to be ready
+  setTimeout(() => {
+    const productsData = Alpine.store("cart");
+
+    // Search in menu items
+    const menuItems = [
+      { id: 1, name: "Espresso", category: "coffee", page: "menu" },
+      { id: 2, name: "Latte Coffee", category: "coffee", page: "menu" },
+      { id: 3, name: "Matcha Coffee", category: "coffee", page: "menu" },
+      { id: 4, name: "Cappuccino", category: "coffee", page: "menu" },
+      { id: 5, name: "Americano", category: "coffee", page: "menu" },
+      {
+        id: 6,
+        name: "Beranda Coffee Pastry",
+        category: "coffee",
+        page: "menu",
+      },
+      { id: 7, name: "French Fries", category: "snack", page: "menu" },
+      { id: 8, name: "Sandwich", category: "snack", page: "menu" },
+      { id: 9, name: "Roti Coklat", category: "snack", page: "menu" },
+      { id: 10, name: "Roti Keju", category: "snack", page: "menu" },
+      { id: 11, name: "Brownies Coklat", category: "dessert", page: "menu" },
+      { id: 12, name: "Manggo Pudding", category: "dessert", page: "menu" },
+    ];
+
+    const productItems = [
+      { id: 101, name: "Arabica Gayo", page: "products" },
+      { id: 102, name: "Robusta Lampung", page: "products" },
+      { id: 103, name: "Arabica Toraja", page: "products" },
+      { id: 104, name: "Kopi Luwak", page: "products" },
+    ];
+
+    // Search in menu items
+    const menuResults = menuItems.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm)
+    );
+
+    // Search in product items
+    const productResults = productItems.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm)
+    );
+
+    console.log("Menu results:", menuResults);
+    console.log("Product results:", productResults);
+
+    // Navigate to the appropriate page
+    if (menuResults.length > 0) {
+      // Found in menu - navigate to menu.html
+      const firstResult = menuResults[0];
+      showSearchNotification("Ditemukan: " + firstResult.name, "success");
+      setTimeout(() => {
+        navigateToResult("menu", firstResult.category, firstResult.id);
+      }, 500);
+    } else if (productResults.length > 0) {
+      // Found in products - navigate to products.html
+      const firstResult = productResults[0];
+      showSearchNotification("Ditemukan: " + firstResult.name, "success");
+      setTimeout(() => {
+        navigateToResult("products", null, firstResult.id);
+      }, 500);
+    } else {
+      // No results found
+      showSearchNotification(
+        "Tidak ditemukan hasil untuk '" + searchTerm + "'",
+        "error"
+      );
+    }
+
+    // Jangan tutup search form otomatis
+    // Biarkan user menutup manual dengan click di luar atau tombol close
+  }, 100);
+}
+
+// Function to navigate to search result
+function navigateToResult(page, category, itemId) {
+  const currentPage = window.location.pathname.split("/").pop();
+
+  if (page === "menu") {
+    if (currentPage === "menu.html") {
+      // Already on menu page - just filter and scroll
+      filterAndScrollToItem(category, itemId);
+    } else {
+      // Navigate to menu page with category filter
+      window.location.href = `menu.html?category=${category}`;
+    }
+  } else if (page === "products") {
+    if (currentPage === "products.html") {
+      // Already on products page - just scroll to item
+      scrollToProductItem(itemId);
+    } else {
+      // Navigate to products page
+      window.location.href = "products.html";
+    }
+  }
+}
+
+// Function to filter and scroll to menu item
+function filterAndScrollToItem(category, itemId) {
+  if (typeof Alpine === "undefined") return;
+
+  // Wait for Alpine to be ready
+  setTimeout(() => {
+    const productsElement = document.querySelector('[x-data="products"]');
+    if (productsElement) {
+      const productsData = Alpine.$data(productsElement);
+
+      if (productsData) {
+        // Set category filter
+        productsData.selectedCategory = category;
+
+        // Wait for Alpine to re-render
+        setTimeout(() => {
+          // Scroll to the item
+          const menuSection = document.getElementById("menu");
+          if (menuSection) {
+            menuSection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+
+          // Highlight the found item
+          highlightSearchResult(itemId);
+        }, 300);
+      }
+    }
+  }, 200);
+}
+
+// Function to scroll to product item
+function scrollToProductItem(itemId) {
+  setTimeout(() => {
+    const productsSection = document.getElementById("products");
+    if (productsSection) {
+      productsSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      // Highlight the found item
+      highlightSearchResult(itemId);
+    }
+  }, 300);
+}
+
+// Function to highlight search result
+function highlightSearchResult(itemId) {
+  setTimeout(() => {
+    // Find all cards
+    const cards = document.querySelectorAll(".menu-card, .product-card-new");
+
+    cards.forEach((card) => {
+      // Check if this card has the matching item ID
+      const detailButton = card.querySelector(".item-detail-button");
+      if (detailButton && detailButton.dataset.id == itemId) {
+        // Add highlight effect
+        card.style.transition = "all 0.3s ease";
+        card.style.transform = "scale(1.05)";
+        card.style.boxShadow = "0 8px 30px rgba(182, 137, 91, 0.5)";
+        card.style.border = "2px solid var(--primary)";
+
+        // Remove highlight after 2 seconds
+        setTimeout(() => {
+          card.style.transform = "scale(1)";
+          card.style.boxShadow = "";
+          card.style.border = "";
+        }, 2000);
+      }
+    });
+  }, 500);
+}
+
+// Function to show search notification
+function showSearchNotification(message, type = "info") {
+  // Remove existing notification if any
+  const existingNotification = document.querySelector(".search-notification");
+  if (existingNotification) {
+    document.body.removeChild(existingNotification);
+  }
+
+  // Create notification element
+  const notification = document.createElement("div");
+  notification.className = "search-notification";
+  notification.textContent = message;
+
+  // Set color based on type
+  let bgColor = "#333";
+  if (type === "success") {
+    bgColor = "#4CAF50"; // Green for success
+  } else if (type === "error") {
+    bgColor = "#f44336"; // Red for error
+  }
+
+  notification.style.cssText = `
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${bgColor};
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 9999;
+    animation: slideDown 0.3s ease;
+    font-weight: 500;
+  `;
+
+  document.body.appendChild(notification);
+
+  // Remove notification after 2 seconds (lebih cepat untuk success)
+  const duration = type === "success" ? 2000 : 3000;
+  setTimeout(() => {
+    notification.style.animation = "slideUp 0.3s ease";
+    setTimeout(() => {
+      if (document.body.contains(notification)) {
+        document.body.removeChild(notification);
+      }
+    }, 300);
+  }, duration);
+}
+
+// Add CSS animations for notification
+const style = document.createElement("style");
+style.textContent = `
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-20px);
+    }
+  }
+`;
+document.head.appendChild(style);
+
+// Update close search form handler agar tidak close saat click di dalam search box
+document.addEventListener("click", function (e) {
+  const isClickSearchForm = searchForm && searchForm.contains(e.target);
+  const isClickSearchButton = searchButton && searchButton.contains(e.target);
+
+  // Jangan tutup search form jika click di dalam search form atau search button
+  if (!isClickSearchForm && !isClickSearchButton && searchForm) {
+    searchForm.classList.remove("active");
   }
 });

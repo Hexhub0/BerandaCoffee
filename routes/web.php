@@ -38,17 +38,11 @@ Route::get('/admin/transaksi', function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     
-    // Dashboard Admin
-    Route::get('/admin', [AdminController::class, 'admin'])->name('admin.admin');
+Route::get('/admin', [AdminController::class, 'admin'])->name('admin.admin');
     
-    // Manajemen User
-    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
-    
-    // Tambahkan route admin lainnya di sini...
-    
+Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
 });
 
-// ===== ROUTE UNTUK MENGUJI ROLE =====
 Route::get('/check-role', function () {
     if (auth()->check()) {
         $user = auth()->user();

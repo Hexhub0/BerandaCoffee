@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Menu - Beranda Coffee</title>
+    <title>Produk - Beranda Coffee</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -25,8 +25,7 @@
     </svg>
 
     <!-- My Style -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="css/menu.css" />
+    <link rel="stylesheet" href="css/style.css" />
 
     <!-- Alpine JS -->
     <script
@@ -35,26 +34,21 @@
     ></script>
 
     <!-- App -->
-    <script src="js/app.js" async></script>
+    <script src="src/app.js" async></script>
   </head>
   <body>
     <!-- Navbar -->
     <nav class="navbar" x-data>
-      <a href="#" class="navbar-logo">Beranda<span>Coffee</span>.</a>
+      <a href="index.html" class="navbar-logo">Beranda<span>Coffee</span>.</a>
 
       <div class="navbar-nav">
-        <a href="/home">Beranda</a>
-        <a href="#about">Tentang Kami</a>
-        <a href="/menu">Menu</a>
-        <a href="#products">Produk Kami</a>
-        <a href="#contact">Kontak</a>
+        <a href="index.html">Beranda</a>
+        <a href="menu.html">Menu</a>
+        <a href="products.html">Produk Kami</a>
+        <a href="order-history.html">Riwayat Pesanan</a>
       </div>
 
       <div class="navbar-extra">
-        <a href="/login" id="login-button" class="login-btn">
-          <i data-feather="log-in"></i>
-          <span>Login</span>
-        </a>
         <a href="#" id="search-button"><i data-feather="search"></i></a>
         <a href="#" id="shopping-cart-button"
           ><i data-feather="shopping-cart"></i
@@ -64,12 +58,26 @@
             x-text="$store.cart.quantity"
           ></span
         ></a>
+        <!-- Profile Button -->
+        <div class="profile-dropdown">
+          <button class="profile-btn" id="profile-button">
+            <i data-feather="user"></i>
+          </button>
+          <div class="profile-dropdown-content" id="profile-dropdown">
+            <div class="profile-actions">
+              <a href="#" class="profile-action-item logout" id="logout-btn">
+                <i data-feather="log-out"></i>
+                <span>Log Out</span>
+              </a>
+            </div>
+          </div>
+        </div>
         <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
       </div>
 
       <!-- Search Form start -->
       <div class="search-form">
-        <input type="search" id="search-box" placeholder="Search Here..." />
+        <input type="search" id="search-box" placeholder="Cari produk..." />
         <label for="search-box"><i data-feather="search"></i></label>
       </div>
       <!-- Search Form end -->
@@ -104,98 +112,86 @@
         <h4 x-show="$store.cart.items.length">
           Total : <span x-text="$store.cart.rupiah($store.cart.total)"></span>
         </h4>
-        <div class="form-container" x-show="$store.cart.items.length">
-          <form action="" id="checkoutForm">
-            <input
-              type="hidden"
-              name="items"
-              x-model="JSON.stringify($store.cart.items)"
-            />
-            <input type="hidden" name="total" x-model="$store.cart.total" />
-
-            <h5>Customer Detail</h5>
-
-            <label for="name">
-              <span>Name</span>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Your name"
-                required
-              />
-            </label>
-
-            <label for="email">
-              <span>Email</span>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="your@email.com"
-                required
-              />
-            </label>
-
-            <label for="phone">
-              <span>Phone</span>
-              <input
-                type="tel"
-                name="phone"
-                id="phone"
-                placeholder="Your phone number"
-                autocomplete="off"
-                required
-              />
-            </label>
-
-            <button
-              class="checkout-button disabled"
-              type="submit"
-              id="checkout-button"
-              value="checkout"
-            >
-              Checkout
-            </button>
-          </form>
+        <div
+          class="checkout-link-container"
+          x-show="$store.cart.items.length"
+          style="
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px dashed #666;
+            margin-top: 1rem;
+          "
+        >
+          <a
+            href="checkout.html"
+            class="checkout-button-link"
+            style="
+              display: inline-block;
+              width: 100%;
+              padding: 1rem;
+              background: linear-gradient(
+                135deg,
+                var(--primary) 0%,
+                #a67a50 100%
+              );
+              color: white;
+              text-decoration: none;
+              border-radius: 25px;
+              font-weight: 700;
+              transition: all 0.3s ease;
+              box-shadow: 0 4px 15px rgba(182, 137, 91, 0.3);
+              font-size: 1.1rem;
+            "
+          >
+            <i
+              data-feather="arrow-right"
+              style="
+                width: 18px;
+                height: 18px;
+                vertical-align: middle;
+                margin-right: 8px;
+              "
+            ></i>
+            Lanjut ke Checkout
+          </a>
         </div>
       </div>
       <!-- Shopping Cart end -->
     </nav>
     <!-- Navbar end -->
 
-    <!-- Hero Section start -->
-    <section class="hero" id="home">
-      <main class="content">
-        <h1>Mari Nikmati<span> Secangkir Kopi</span></h1>
-        <p>
-          Apapun suasana hati Kamu, kopi kami selalu siap menemani hari-hari mu
-          dengan rasa yang tak terlupakan, dan cinta rasa di setiap tegukan nya.
-        </p>
-      </main>
-    </section>
-    <!-- Hero Section end -->
-
     <!-- Products Section start -->
-    <section id="products" class="products" x-data="products">
-      <h2><span>Produk</span> Kami</h2>
+    <section id="products" class="products products-page" x-data="products">
+      <div class="products-header">
+        <h2><span>Produk</span> Kami</h2>
+        <p>
+          Produk unggulan kami berupa biji kopi terbaik yang dipetik dari
+          perkebunan dataran tinggi, menghasilkan cita rasa yang kaya dan aroma
+          yang menggugah selera.
+        </p>
+      </div>
+
       <div class="row">
         <template x-for="item in sortedItems" :key="item.id">
-          <div class="product-card">
-            <div class="product-icons">
+          <div class="product-card-new">
+            <div class="product-badge">
+              <span>Premium</span>
+            </div>
+
+            <div class="product-actions-top">
               <!-- FAVORITE -->
               <a
                 href="#"
                 @click.prevent="$store.favorites.toggle(item, 'product')"
-                class="favorite-btn"
+                class="product-action-btn favorite-btn"
                 :class="{ 'favorited': $store.favorites.isFavorited(item, 'product') }"
                 :title="$store.favorites.isFavorited(item, 'product')
                 ? 'Hapus dari Favorit'
                 : 'Tambah ke Favorit'"
               >
                 <svg
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   :fill="$store.favorites.isFavorited(item, 'product')
                     ? 'currentColor'
                     : 'none'"
@@ -205,60 +201,45 @@
                   <use href="img/feather-sprite.svg#heart" />
                 </svg>
               </a>
-
-              <!-- CART -->
-                <a href="#" @click.prevent="$store.cart.add(item)">
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <use href="img/feather-sprite.svg#shopping-cart" />
-                  </svg>
-                </a>
-
-                <!-- DETAIL (TANPA DATA RATING) -->
-                <a
-                  href="#"
-                  class="item-detail-button"
-                  :data-id="item.id"
-                  :data-type="'product'"
-                  :data-name="item.name"
-                  :data-desc="item.desc"
-                  :data-img="`img/products/${item.img}`"
-                  :data-price="$store.cart.rupiah(item.price)"
-                  title="Lihat Detail"
+              <!-- DETAIL -->
+              <a
+                href="#"
+                class="product-action-btn item-detail-button"
+                :data-id="item.id"
+                :data-type="'product'"
+                :data-name="item.name"
+                :data-desc="item.desc"
+                :data-img="`img/products/${item.img}`"
+                :data-price="$store.cart.rupiah(item.price)"
+                title="Lihat Detail"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
                 >
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <use href="img/feather-sprite.svg#eye" />
-                  </svg>
-                </a>
-              </div>
-
-              <div class="product-image">
-                <img :src="`img/products/${item.img}`" :alt="item.name" />
-              </div>
-
-              <div class="product-content">
-                <h3 x-text="item.name"></h3>
-
-                <!-- ⭐ RATING DISPLAY (READ ONLY) -->
-                <div class="product-stars">
+                  <use href="img/feather-sprite.svg#eye" />
+                </svg>
+              </a>
+            </div>
+            <div class="product-image-wrapper">
+              <img :src="`img/products/${item.img}`" :alt="item.name" />
+            </div>
+            <div class="product-info">
+              <h3 x-text="item.name"></h3>
+              <p class="product-desc" x-text="item.desc"></p>
+              <!-- RATING DISPLAY -->
+              <div class="product-rating">
+                <div class="product-stars-new">
                   <template x-for="i in 5" :key="i">
                     <svg
-                      width="18"
-                      height="18"
+                      width="16"
+                      height="16"
                       :fill="i <= Math.round(
-                      $store.ratings.getAverageRating(item.id, 'product')
-                      ) ? 'currentColor' : 'none'"
+                        $store.ratings.getAverageRating(item.id, 'product')
+                        ) ? 'currentColor' : 'none'"
                       stroke="currentColor"
                       stroke-width="2"
                     >
@@ -266,20 +247,37 @@
                     </svg>
                   </template>
                 </div>
-
-                <div
-                  class="rating-count"
-                  x-text="'(' + $store.ratings.getRatingCount(item.id, 'product') + ' rating)'"
-                ></div>
-
-                <div class="product-price">
+                <span
+                  class="rating-count-new"
+                  x-text="'(' + $store.ratings.getRatingCount(item.id, 'product') + ')'"
+                ></span>
+              </div>
+              <div class="product-footer">
+                <div class="product-price-new">
                   <span x-text="$store.cart.rupiah(item.price)"></span>
                 </div>
+                <button
+                  class="add-to-cart-btn-product"
+                  @click="$store.cart.add(item)"
+                  title="Tambah ke Keranjang"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <use href="img/feather-sprite.svg#shopping-cart" />
+                  </svg>
+                  <span>Beli</span>
+                </button>
               </div>
             </div>
-          </template>
-        </div>
-      </section>
+          </div>
+        </template>
+      </div>
+    </section>
     <!-- Products Section end -->
 
     <!-- Footer start -->
@@ -295,20 +293,25 @@
         <div class="footer-col">
           <h3>Link</h3>
           <ul>
-            <li><a href="#home">Beranda</a></li>
-            <li><a href="#about">Tentang Kami</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="#products">Produk Kami</a></li>
-            <li><a href="#contact">Kontak</a></li>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="index.html#about">Tentang Kami</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="products.html">Produk Kami</a></li>
+            <li><a href="index.html#contact">Kontak</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h3>Situs</h3>
+          <h3>Coffee Blogs</h3>
           <ul>
-            <li><a href="#">Coffee Shop</a></li>
-            <li><a href="#">Premium Beans</a></li>
-            <li><a href="#">Brew Academy</a></li>
-            <li><a href="#">Coffee Blogs</a></li>
+            <li><a href="https://coffeeland.co.id/">Coffee Land</a></li>
+            <li>
+              <a
+                href="https://ottencoffee.co.id/brands/otten-coffee?categoryIds=%5B382%5D&page=1&msclkid=3ec953538edf1f658bef3a1a20752ed1"
+                >Otten Coffee</a
+              >
+            </li>
+            <li><a href="https://www.baristahustle.com/">Barista Hustle</a></li>
+            <li><a href="https://sprudge.com/">Sprudge</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -332,9 +335,9 @@
     <!-- Modal Box Item Detail start -->
     <div class="modal" id="item-detail-modal">
       <div class="modal-container">
-        <button type="button" class="close-icon" style="background-color: white;">✕</button>
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
         <div class="modal-content">
-          <img src="img/Products/1.jpg" alt="Product 1" />
+          <img src="img/products/1.jpg" alt="Product 1" />
           <div class="product-content">
             <h3>Product 1</h3>
             <p>
@@ -422,7 +425,6 @@
                 </svg>
               </div>
             </div>
-
             <div class="product-price">IDR 30K</div>
           </div>
         </div>
@@ -432,35 +434,9 @@
 
     <script>
       feather.replace();
-
-      // Form submission handling
-      document
-        .getElementById("ulasanForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          const name = document.getElementById("ulasanName").value.trim();
-          const email = document.getElementById("ulasanEmail").value.trim();
-          const message = document.getElementById("ulasanText").value.trim();
-
-          if (!name || !email || !message) {
-            alert("Harap lengkapi semua field sebelum mengirim ulasan.");
-            return;
-          }
-
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(email)) {
-            alert("Harap masukkan alamat email yang valid.");
-            return;
-          }
-
-          alert("Terima kasih! Ulasan Anda telah berhasil dikirim.");
-          this.reset();
-        });
     </script>
 
     <!-- My Javascript -->
-    <script src="/js/script.js"></script>
-    <script src="/js/menu.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

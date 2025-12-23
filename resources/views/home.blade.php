@@ -17,7 +17,7 @@
     <script src="https://unpkg.com/feather-icons"></script>
 
     <!-- My Style -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="css/style.css" />
 
     <!-- Alpine JS -->
     <script
@@ -48,10 +48,6 @@
             <i data-feather="user"></i>
           </button>
           <div class="profile-dropdown-content" id="profile-dropdown">
-            <div class="profile-info">
-              <h4 id="profile-username">Guest User</h4>
-              <p id="profile-email">guest@example.com</p>
-            </div>
             <div class="profile-actions">
               <!-- Hanya logout yang tersisa -->
               <a href="#" class="profile-action-item logout" id="logout-btn">

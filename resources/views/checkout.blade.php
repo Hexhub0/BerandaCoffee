@@ -17,7 +17,7 @@
     <script src="https://unpkg.com/feather-icons"></script>
 
     <!-- My Style -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="css/style.css" />
 
     <!-- Alpine JS -->
     <script
@@ -37,12 +37,13 @@
       }
 
       .checkout-container {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto;
-        padding: 0 7%;
+        padding: 0 5%;
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 2rem;
+        align-items: start;
       }
 
       .checkout-section {
@@ -257,37 +258,65 @@
         color: var(--primary);
       }
 
-      .order-item {
-        display: flex;
-        gap: 1.5rem;
-        padding: 1.5rem 0;
-        border-bottom: 1px solid #e0e0e0;
+      .order-items {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 1rem;
       }
 
-      .order-item:last-child {
-        border-bottom: none;
+      .order-items::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .order-items::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      .order-items::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 10px;
+      }
+
+      .order-item {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        margin-bottom: 0.8rem;
+        background: #f9f9f9;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .order-item:hover {
+        background: #f0f0f0;
+        transform: translateX(5px);
       }
 
       .order-item img {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
         object-fit: cover;
-        border-radius: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
 
       .order-item-details {
         flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
 
       .order-item-name {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 700;
         color: #2c1810;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.3rem;
       }
 
       .order-item-price {
-        font-size: 1rem;
+        font-size: 0.9rem;
         color: #666;
         display: flex;
         align-items: center;
@@ -295,11 +324,19 @@
       }
 
       .order-item-quantity {
-        background: rgba(182, 137, 91, 0.1);
-        padding: 0.3rem 0.8rem;
-        border-radius: 20px;
+        background: rgba(182, 137, 91, 0.15);
+        padding: 0.2rem 0.6rem;
+        border-radius: 15px;
         font-weight: 600;
+        font-size: 0.85rem;
         color: var(--primary);
+      }
+
+      .order-item-total {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--primary);
+        align-self: center;
       }
 
       .order-summary {
@@ -582,16 +619,23 @@
       }
 
       .receipt-qr-placeholder {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
         margin: 0 auto;
-        background: #f0f0f0;
+        background: white;
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #999;
-        font-size: 3rem;
+        border: 3px solid var(--primary);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .qr-code-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
 
       .status-badge {
@@ -743,6 +787,17 @@
         display: block;
       }
 
+      .error-message {
+        color: #e74c3c;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        display: none;
+      }
+
+      .error-message.show {
+        display: block;
+      }
+
       @media print {
         body * {
           visibility: hidden;
@@ -833,10 +888,6 @@
             <i data-feather="user"></i>
           </button>
           <div class="profile-dropdown-content" id="profile-dropdown">
-            <div class="profile-info">
-              <h4 id="profile-username">Guest User</h4>
-              <p id="profile-email">guest@example.com</p>
-            </div>
             <div class="profile-actions">
               <a href="#" class="profile-action-item logout" id="logout-btn">
                 <i data-feather="log-out"></i>
@@ -861,7 +912,7 @@
 
           <form @submit.prevent="processCheckout">
             <div class="form-group">
-              <label>Nama Lengkap <span>*</span></label>
+              <label>Nama <span>*</span></label>
               <input
                 type="text"
                 x-model="customerName"
@@ -873,21 +924,16 @@
             <div class="form-group">
               <label>Nomor Meja <span>*</span></label>
               <input
-                type="text"
+                type="number"
                 x-model="tableNumber"
                 placeholder="Contoh: 5"
+                min="1"
                 required
+                @input="validateTableNumber"
               />
-            </div>
-
-            <div class="form-group">
-              <label>Nomor Telepon <span>*</span></label>
-              <input
-                type="tel"
-                x-model="phoneNumber"
-                placeholder="Contoh: 08123456789"
-                required
-              />
+              <span class="error-message" id="table-error"
+                >Nomor meja harus berupa angka</span
+              >
             </div>
 
             <div class="form-group">
@@ -943,38 +989,38 @@
               <div class="payment-option">
                 <input
                   type="radio"
-                  id="transfer"
+                  id="va"
                   name="payment"
-                  value="Transfer Bank"
+                  value="Virtual Account"
                   x-model="paymentMethod"
                   @change="selectedBank = ''"
                 />
-                <label for="transfer" class="payment-label">
+                <label for="va" class="payment-label">
                   <div class="payment-icon">
-                    <i data-feather="send"></i>
+                    <i data-feather="credit-card"></i>
                   </div>
-                  <span class="payment-name">Transfer Bank</span>
+                  <span class="payment-name">Virtual Account</span>
                 </label>
               </div>
             </div>
 
-            <!-- Bank Selection for Transfer -->
+            <!-- Bank Selection for Virtual Account -->
             <div
-              x-show="paymentMethod === 'Transfer Bank'"
+              x-show="paymentMethod === 'Virtual Account'"
               class="bank-selection"
               x-transition
             >
-              <h4>Pilih Bank untuk Transfer</h4>
+              <h4>Pilih Bank Virtual Account</h4>
               <div class="bank-grid">
                 <div class="bank-option">
                   <input
                     type="radio"
-                    id="bca-transfer"
+                    id="bca-va"
                     value="BCA"
                     x-model="selectedBank"
                     @change="generateVirtualAccount()"
                   />
-                  <label for="bca-transfer" class="bank-label">
+                  <label for="bca-va" class="bank-label">
                     <div class="bank-logo">BCA</div>
                     <span class="bank-name">BCA</span>
                   </label>
@@ -982,12 +1028,12 @@
                 <div class="bank-option">
                   <input
                     type="radio"
-                    id="mandiri-transfer"
+                    id="mandiri-va"
                     value="Mandiri"
                     x-model="selectedBank"
                     @change="generateVirtualAccount()"
                   />
-                  <label for="mandiri-transfer" class="bank-label">
+                  <label for="mandiri-va" class="bank-label">
                     <div class="bank-logo">MDR</div>
                     <span class="bank-name">Mandiri</span>
                   </label>
@@ -995,12 +1041,12 @@
                 <div class="bank-option">
                   <input
                     type="radio"
-                    id="bni-transfer"
+                    id="bni-va"
                     value="BNI"
                     x-model="selectedBank"
                     @change="generateVirtualAccount()"
                   />
-                  <label for="bni-transfer" class="bank-label">
+                  <label for="bni-va" class="bank-label">
                     <div class="bank-logo">BNI</div>
                     <span class="bank-name">BNI</span>
                   </label>
@@ -1008,12 +1054,12 @@
                 <div class="bank-option">
                   <input
                     type="radio"
-                    id="bri-transfer"
+                    id="bri-va"
                     value="BRI"
                     x-model="selectedBank"
                     @change="generateVirtualAccount()"
                   />
-                  <label for="bri-transfer" class="bank-label">
+                  <label for="bri-va" class="bank-label">
                     <div class="bank-logo">BRI</div>
                     <span class="bank-name">BRI</span>
                   </label>
@@ -1048,7 +1094,7 @@
             <button
               type="submit"
               class="checkout-btn"
-              :disabled="!customerName || !tableNumber || !phoneNumber || !paymentMethod || $store.cart.items.length === 0 || (paymentMethod === 'Transfer Bank' && !selectedBank)"
+              :disabled="!customerName || !tableNumber || !paymentMethod || $store.cart.items.length === 0 || (paymentMethod === 'Virtual Account' && !selectedBank)"
             >
               <i data-feather="check-circle"></i>
               <span>Proses Pesanan</span>
@@ -1097,7 +1143,7 @@
                       </div>
                     </div>
                     <div
-                      style="font-weight: 700; color: var(--primary)"
+                      class="order-item-total"
                       x-text="$store.cart.rupiah(item.total)"
                     ></div>
                   </div>
@@ -1187,10 +1233,6 @@
             <div class="receipt-info-row">
               <span class="receipt-info-label">No. Meja:</span>
               <span class="receipt-info-value" id="receipt-table-number"></span>
-            </div>
-            <div class="receipt-info-row">
-              <span class="receipt-info-label">No. Telepon:</span>
-              <span class="receipt-info-value" id="receipt-phone"></span>
             </div>
             <div
               class="receipt-info-row"
@@ -1295,7 +1337,11 @@
             <h3 style="text-align: center">Scan QR Code</h3>
             <div class="receipt-qr">
               <div class="receipt-qr-placeholder">
-                <i data-feather="maximize"></i>
+                <img
+                  class="qr-code-image"
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=QRIS_BERANDA_COFFEE_PAYMENT"
+                  alt="QRIS Code"
+                />
               </div>
             </div>
           </div>
@@ -1393,11 +1439,22 @@
         return {
           customerName: "",
           tableNumber: "",
-          phoneNumber: "",
           orderNotes: "",
           paymentMethod: "Tunai",
           selectedBank: "",
           virtualAccountNumber: "",
+
+          validateTableNumber() {
+            const input = this.tableNumber;
+            const errorMsg = document.getElementById("table-error");
+
+            if (input && !/^\d+$/.test(input)) {
+              errorMsg.classList.add("show");
+              this.tableNumber = input.replace(/\D/g, "");
+            } else {
+              errorMsg.classList.remove("show");
+            }
+          },
 
           generateVirtualAccount() {
             const bankCode = {
@@ -1436,8 +1493,8 @@
               second: "2-digit",
             });
 
-            // Generate VA if transfer
-            if (this.paymentMethod === "Transfer Bank") {
+            // Generate VA if Virtual Account
+            if (this.paymentMethod === "Virtual Account") {
               this.generateVirtualAccount();
             }
 
@@ -1450,8 +1507,6 @@
               this.customerName;
             document.getElementById("receipt-table-number").textContent =
               this.tableNumber;
-            document.getElementById("receipt-phone").textContent =
-              this.phoneNumber;
 
             // Notes
             if (this.orderNotes) {
@@ -1548,7 +1603,7 @@
                   </p>
                 </div>
               `;
-            } else if (this.paymentMethod === "Transfer Bank") {
+            } else if (this.paymentMethod === "Virtual Account") {
               statusBadge.className = "status-badge status-completed";
               statusBadge.textContent = "Selesai";
 
@@ -1575,14 +1630,14 @@
               instructionEl.innerHTML = `
                 <div class="payment-instruction-box instruction-online">
                   <p>
-                    <i data-feather="send"></i>
+                    <i data-feather="credit-card"></i>
                     Transfer ke Virtual Account di atas sesuai nominal total.
                   </p>
                 </div>
                 <div style="margin-top: 1rem; padding: 1rem; background: #d1e7dd; border-radius: 8px; border-left: 4px solid #198754;">
                   <p style="color: #0f5132; font-size: 0.95rem; margin: 0;">
                     <strong>✅ Status: SELESAI</strong><br>
-                    Pembayaran melalui Transfer Bank dianggap selesai. Pesanan Anda segera diproses!
+                    Pembayaran melalui Virtual Account dianggap selesai. Pesanan Anda segera diproses!
                   </p>
                 </div>
               `;
@@ -1651,7 +1706,7 @@
         // Determine status based on payment method
         let orderStatus = "Pending";
         if (
-          paymentMethod.includes("Transfer Bank") ||
+          paymentMethod.includes("Virtual Account") ||
           paymentMethod.includes("QRIS")
         ) {
           orderStatus = "Completed";
@@ -1666,7 +1721,6 @@
             .textContent,
           tableNumber: document.getElementById("receipt-table-number")
             .textContent,
-          phoneNumber: document.getElementById("receipt-phone").textContent,
           notes: document.getElementById("receipt-notes").textContent || "",
           paymentMethod: paymentMethod,
           subtotal: document.getElementById("receipt-subtotal").textContent,
