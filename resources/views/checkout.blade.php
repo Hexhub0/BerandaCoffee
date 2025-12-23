@@ -17,7 +17,7 @@
     <script src="https://unpkg.com/feather-icons"></script>
 
     <!-- My Style -->
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
     <!-- Alpine JS -->
     <script
@@ -26,7 +26,7 @@
     ></script>
 
     <!-- App -->
-    <script src="src/app.js" async></script>
+    <script src="js/app.js" async></script>
 
     <style>
       .checkout-page {
@@ -864,13 +864,13 @@
   <body>
     <!-- Navbar -->
     <nav class="navbar" x-data>
-      <a href="index.html" class="navbar-logo">Beranda<span>Coffee</span>.</a>
+      <a href="/home" class="navbar-logo">Beranda<span>Coffee</span>.</a>
 
       <div class="navbar-nav">
-        <a href="index.html">Beranda</a>
-        <a href="menu.html">Menu</a>
-        <a href="products.html">Produk Kami</a>
-        <a href="order-history.html">Riwayat Pesanan</a>
+        <a href="/home">Beranda</a>
+        <a href="/menu">Menu</a>
+        <a href="/products">Produk Kami</a>
+        <a href="/order-history">Riwayat Pesanan</a>
       </div>
 
       <div class="navbar-extra">
@@ -1113,7 +1113,7 @@
               <i data-feather="shopping-cart"></i>
               <h3>Keranjang Kosong</h3>
               <p>Belum ada item di keranjang Anda</p>
-              <a href="menu.html">
+              <a href="/menu">
                 <i data-feather="arrow-left"></i>
                 <span>Kembali ke Menu</span>
               </a>
@@ -1397,11 +1397,11 @@
         <div class="footer-col">
           <h3>Link</h3>
           <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="index.html#about">Tentang Kami</a></li>
-            <li><a href="menu.html">Menu</a></li>
-            <li><a href="products.html">Produk Kami</a></li>
-            <li><a href="index.html#contact">Kontak</a></li>
+            <li><a href="/home">Beranda</a></li>
+            <li><a href="/home#about">Tentang Kami</a></li>
+            <li><a href="/menu">Menu</a></li>
+            <li><a href="/products">Produk Kami</a></li>
+            <li><a href="/home#contact">Kontak</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -1775,7 +1775,7 @@
       function closeReceipt() {
         document.getElementById("receiptModal").classList.remove("active");
         setTimeout(() => {
-          window.location.href = "index.html";
+          window.location.href = "/home";
         }, 300);
       }
 

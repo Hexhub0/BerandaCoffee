@@ -25,7 +25,7 @@
     </svg>
 
     <!-- My Style -->
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
     <!-- Alpine JS -->
     <script
@@ -34,17 +34,17 @@
     ></script>
 
     <!-- App -->
-    <script src="src/app.js" async></script>
+    <script src="js/app.js" async></script>
   </head>
   <body>
     <!-- Navbar -->
     <nav class="navbar" x-data>
-      <a href="index.html" class="navbar-logo">Beranda<span>Coffee</span>.</a>
+      <a href="/home" class="navbar-logo">Beranda<span>Coffee</span>.</a>
 
       <div class="navbar-nav">
-        <a href="index.html">Beranda</a>
-        <a href="menu.html">Menu</a>
-        <a href="products.html">Produk Kami</a>
+        <a href="/home">Beranda</a>
+        <a href="/menu">Menu</a>
+        <a href="/products">Produk Kami</a>
         <a href="order-history.html">Riwayat Pesanan</a>
       </div>
 
@@ -334,11 +334,11 @@
         <div class="footer-col">
           <h3>Link</h3>
           <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="index.html#about">Tentang Kami</a></li>
-            <li><a href="menu.html">Menu</a></li>
-            <li><a href="products.html">Produk Kami</a></li>
-            <li><a href="index.html#contact">Kontak</a></li>
+            <li><a href="/home">Beranda</a></li>
+            <li><a href="/home#about">Tentang Kami</a></li>
+            <li><a href="/menu">Menu</a></li>
+            <li><a href="/products">Produk Kami</a></li>
+            <li><a href="/home#contact">Kontak</a></li>
           </ul>
         </div>
         <div class="footer-col">

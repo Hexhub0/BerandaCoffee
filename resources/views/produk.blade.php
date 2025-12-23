@@ -25,7 +25,7 @@
     </svg>
 
     <!-- My Style -->
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 
     <!-- Alpine JS -->
     <script
@@ -34,18 +34,18 @@
     ></script>
 
     <!-- App -->
-    <script src="src/app.js" async></script>
+    <script src="js/app.js" async></script>
   </head>
   <body>
     <!-- Navbar -->
     <nav class="navbar" x-data>
-      <a href="index.html" class="navbar-logo">Beranda<span>Coffee</span>.</a>
+      <a href="/home" class="navbar-logo">Beranda<span>Coffee</span>.</a>
 
       <div class="navbar-nav">
-        <a href="index.html">Beranda</a>
-        <a href="menu.html">Menu</a>
-        <a href="products.html">Produk Kami</a>
-        <a href="order-history.html">Riwayat Pesanan</a>
+        <a href="/home">Beranda</a>
+        <a href="/menu">Menu</a>
+        <a href="/products">Produk Kami</a>
+        <a href="/order-history">Riwayat Pesanan</a>
       </div>
 
       <div class="navbar-extra">
