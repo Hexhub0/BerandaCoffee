@@ -1,46 +1,9 @@
-<?php
-  session_start();
-
-if(isset($_SESSION['islogin'])) {
-    header('location:home.blade.php');
-}
-
-if(isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $role = $_POST['role'];
-    echo $email . " " . $password;
-
-    $koneksi = mysqli_connect('https://berandacoffee.site/', 'root', '', 'u705926806_berandacoffee');
-    
-    $stmt = mysqli_prepare($koneksi, "SELECT password FROM users WHERE email= ?");
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $password_db);
-    mysqli_stmt_fetch($stmt);
-    mysqli_stmt_close($stmt);
-
-    if($password_db && password_verify($password, $password_db)) {
-        $_SESSION['islogin'] = true;
-        $_SESSION['users'] = $email;
-        header('location:home.blade.php');
-        if($role === 'admin') {
-            $_SESSION['isadmin'] = true;
-            header('location:admin.blade.php');
-        }
-        exit();
-    } else {
-        echo "Login Gagal!";
-    }
-
-}
-?>
-
 <!DOCTYPE html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Login - Beranda Coffee</title>
 
     <!-- Fonts -->
@@ -202,22 +165,6 @@ if(isset($_POST['login'])) {
         color: #999;
       }
 
-      .form-group textarea {
-        resize: vertical;
-        min-height: 90px;
-        line-height: 1.5;
-        padding-left: 3.5rem !important;
-      }
-
-      .form-group select {
-        cursor: pointer;
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 1rem center;
-        background-size: 1rem;
-      }
-
       .input-with-icon {
         position: relative;
       }
@@ -229,11 +176,6 @@ if(isset($_POST['login'])) {
         transform: translateY(-50%);
         color: #666;
         z-index: 2;
-      }
-
-      .input-with-icon.textarea-icon i {
-        top: 1.5rem;
-        transform: translateY(0);
       }
 
       .login-btn-submit {
@@ -291,10 +233,6 @@ if(isset($_POST['login'])) {
         cursor: not-allowed;
         transform: none;
         box-shadow: none;
-      }
-
-      .login-btn-submit:disabled:hover::before {
-        left: -100%;
       }
 
       .login-footer {
@@ -468,78 +406,6 @@ if(isset($_POST['login'])) {
         display: block;
       }
 
-      /* Background Credit */
-      .bg-credit {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.8rem;
-        text-decoration: none;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 4px 8px;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-      }
-
-      .bg-credit:hover {
-        color: white;
-        background: rgba(0, 0, 0, 0.5);
-      }
-
-      /* Responsive */
-      @media (max-width: 768px) {
-        .login-container {
-          padding: 2.5rem;
-          margin: 1rem;
-        }
-
-        .logo-container h1 {
-          font-size: 2.3rem;
-        }
-
-        .form-options {
-          flex-direction: column;
-          gap: 1rem;
-          align-items: flex-start;
-        }
-
-        .modal-content {
-          margin: 10% auto;
-          width: 95%;
-        }
-
-        .bg-credit {
-          display: none;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .login-container {
-          padding: 2rem 1.5rem;
-        }
-
-        .logo-container h1 {
-          font-size: 2rem;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-          padding: 1rem 1.2rem 1rem 3rem;
-          font-size: 16px;
-        }
-
-        .input-with-icon i {
-          left: 1.2rem;
-        }
-
-        .login-btn-submit {
-          padding: 1.1rem 1.5rem;
-          font-size: 1.1rem;
-        }
-      }
-
       /* Loading state */
       .loading {
         position: relative;
@@ -568,20 +434,58 @@ if(isset($_POST['login'])) {
           transform: rotate(360deg);
         }
       }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .login-container {
+          padding: 2.5rem;
+          margin: 1rem;
+        }
+
+        .logo-container h1 {
+          font-size: 2.3rem;
+        }
+
+        .form-options {
+          flex-direction: column;
+          gap: 1rem;
+          align-items: flex-start;
+        }
+
+        .modal-content {
+          margin: 10% auto;
+          width: 95%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .login-container {
+          padding: 2rem 1.5rem;
+        }
+
+        .logo-container h1 {
+          font-size: 2rem;
+        }
+
+        .form-group input {
+          padding: 1rem 1.2rem 1rem 3rem;
+          font-size: 16px;
+        }
+
+        .input-with-icon i {
+          left: 1.2rem;
+        }
+
+        .login-btn-submit {
+          padding: 1.1rem 1.5rem;
+          font-size: 1.1rem;
+        }
+      }
     </style>
   </head>
   <body>
     <!-- Login Page -->
     <div class="login-page">
-      <a
-        href="https://unsplash.com/photos/brown-coffee-beans-on-white-ceramic-bowl-1495474472287"
-        class="bg-credit"
-        target="_blank"
-        title="Photo by Unsplash"
-      >
-        📷 Photo by Unsplash
-      </a>
-
       <div class="login-container">
         <div class="login-header">
           <div class="logo-container">
@@ -594,6 +498,7 @@ if(isset($_POST['login'])) {
         <div class="form-message" id="formMessage"></div>
 
         <form class="login-form" id="loginForm">
+          @csrf
           <div class="form-group">
             <label for="email">Alamat Email</label>
             <div class="input-with-icon">
@@ -646,6 +551,11 @@ if(isset($_POST['login'])) {
             Belum punya akun?
             <a href="#" class="login-link" id="registerLink">Daftar di sini</a>
           </p>
+
+          <a href="/" class="back-to-home">
+            <i data-feather="arrow-left"></i>
+            Kembali ke Beranda
+          </a>
         </div>
       </div>
     </div>
@@ -668,6 +578,7 @@ if(isset($_POST['login'])) {
           <div class="form-message" id="registerMessage"></div>
 
           <form class="login-form" id="registerForm">
+            @csrf
             <div class="form-group">
               <label for="regName">Nama Lengkap</label>
               <div class="input-with-icon">
@@ -757,6 +668,7 @@ if(isset($_POST['login'])) {
           <div class="form-message" id="forgotPasswordMessage"></div>
 
           <form class="login-form" id="forgotPasswordForm">
+            @csrf
             <div class="form-group">
               <label for="resetEmail">Alamat Email</label>
               <div class="input-with-icon">
@@ -797,25 +709,22 @@ if(isset($_POST['login'])) {
     <script>
       feather.replace();
 
+      // Setup CSRF Token untuk semua request AJAX
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      
       // Modal Functionality
       const registerModal = document.getElementById("registerModal");
-      const forgotPasswordModal = document.getElementById(
-        "forgotPasswordModal"
-      );
+      const forgotPasswordModal = document.getElementById("forgotPasswordModal");
       const registerLink = document.getElementById("registerLink");
       const forgotPasswordLink = document.getElementById("forgotPasswordLink");
       const closeRegister = document.getElementById("closeRegister");
-      const closeForgotPassword = document.getElementById(
-        "closeForgotPassword"
-      );
+      const closeForgotPassword = document.getElementById("closeForgotPassword");
       const backToLogin = document.getElementById("backToLogin");
 
       // Form message elements
       const formMessage = document.getElementById("formMessage");
       const registerMessage = document.getElementById("registerMessage");
-      const forgotPasswordMessage = document.getElementById(
-        "forgotPasswordMessage"
-      );
+      const forgotPasswordMessage = document.getElementById("forgotPasswordMessage");
 
       // Show message function
       function showMessage(element, message, type) {
@@ -835,6 +744,7 @@ if(isset($_POST['login'])) {
         e.preventDefault();
         registerModal.style.display = "block";
         registerMessage.style.display = "none";
+        setTimeout(() => feather.replace(), 100);
       });
 
       // Open Forgot Password Modal
@@ -842,6 +752,7 @@ if(isset($_POST['login'])) {
         e.preventDefault();
         forgotPasswordModal.style.display = "block";
         forgotPasswordMessage.style.display = "none";
+        setTimeout(() => feather.replace(), 100);
       });
 
       // Close Modals
@@ -869,25 +780,6 @@ if(isset($_POST['login'])) {
         }
       });
 
-      // Phone number formatting
-      function formatPhoneNumber(inputId) {
-        const input = document.getElementById(inputId);
-        if (input) {
-          input.addEventListener("input", function (e) {
-            let value = e.target.value.replace(/\D/g, "");
-            if (value.startsWith("0")) {
-              value = value.substring(1);
-            }
-            if (value.length > 0) {
-              value = "0" + value;
-            }
-            e.target.value = value;
-          });
-        }
-      }
-
-      formatPhoneNumber("regPhone");
-
       // Loading state function
       function setLoading(button, isLoading) {
         if (isLoading) {
@@ -899,180 +791,173 @@ if(isset($_POST['login'])) {
         }
       }
 
-      // Form validation and submission
-      document
-        .getElementById("loginForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+      // Login Form
+      document.getElementById("loginForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-          const email = document.getElementById("email").value.trim();
-          const password = document.getElementById("password").value;
-          const submitBtn = document.getElementById("loginSubmit");
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const remember = document.querySelector('input[name="remember"]').checked;
+        const submitBtn = document.getElementById("loginSubmit");
 
-          // Validation
-          if (!email || !password) {
-            showMessage(formMessage, "Harap lengkapi semua field!", "error");
-            return;
-          }
+        // Client-side validation
+        if (!email || !password) {
+          showMessage(formMessage, "Harap lengkapi semua field!", "error");
+          return;
+        }
 
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(email)) {
-            showMessage(
-              formMessage,
-              "Harap masukkan alamat email yang valid!",
-              "error"
-            );
-            return;
-          }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          showMessage(formMessage, "Harap masukkan alamat email yang valid!", "error");
+          return;
+        }
 
-          if (password.length < 6) {
-            showMessage(
-              formMessage,
-              "Password harus minimal 6 karakter!",
-              "error"
-            );
-            return;
-          }
+        if (password.length < 6) {
+          showMessage(formMessage, "Password harus minimal 6 karakter!", "error");
+          return;
+        }
 
-          // Set loading state
-          setLoading(submitBtn, true);
+        // Set loading state
+        setLoading(submitBtn, true);
 
-          // Simulate API call
-          setTimeout(() => {
-            setLoading(submitBtn, false);
-            showMessage(
-              formMessage,
-              "Login berhasil! Mengalihkan...",
-              "success"
-            );
+        try {
+          const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': csrfToken,
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              email: email,
+              password: password,
+              remember: remember
+            })
+          });
 
+          const data = await response.json();
+
+          if (response.ok && data.success) {
+            showMessage(formMessage, data.message, "success");
             setTimeout(() => {
-              window.location.href = "/home";
-            }, 2000);
-          }, 1500);
-        });
+              window.location.href = data.redirect;
+            }, 1000);
+          } else {
+            showMessage(formMessage, data.message || "Login gagal. Silakan coba lagi.", "error");
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          showMessage(formMessage, "Terjadi kesalahan. Silakan coba lagi.", "error");
+        } finally {
+          setLoading(submitBtn, false);
+        }
+      });
 
       // Register Form
-      document
-        .getElementById("registerForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+      document.getElementById("registerForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-          const name = document.getElementById("regName").value.trim();
-          const email = document.getElementById("regEmail").value.trim();
-          const password = document.getElementById("regPassword").value;
-          const confirmPassword =
-            document.getElementById("regConfirmPassword").value;
-          const submitBtn = document.getElementById("registerSubmit");
+        const name = document.getElementById("regName").value.trim();
+        const email = document.getElementById("regEmail").value.trim();
+        const password = document.getElementById("regPassword").value;
+        const confirmPassword = document.getElementById("regConfirmPassword").value;
+        const submitBtn = document.getElementById("registerSubmit");
 
-          // Validation
-          if (
-            !name ||
-            !email ||
-            !password ||
-            !confirmPassword
-          ) {
-            showMessage(
-              registerMessage,
-              "Harap lengkapi semua field!",
-              "error"
-            );
-            return;
-          }
+        // Client-side validation
+        if (!name || !email || !password || !confirmPassword) {
+          showMessage(registerMessage, "Harap lengkapi semua field!", "error");
+          return;
+        }
 
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(email)) {
-            showMessage(
-              registerMessage,
-              "Harap masukkan alamat email yang valid!",
-              "error"
-            );
-            return;
-          }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          showMessage(registerMessage, "Harap masukkan alamat email yang valid!", "error");
+          return;
+        }
 
-          if (password.length < 6) {
-            showMessage(
-              registerMessage,
-              "Password harus minimal 6 karakter!",
-              "error"
-            );
-            return;
-          }
+        if (password.length < 6) {
+          showMessage(registerMessage, "Password harus minimal 6 karakter!", "error");
+          return;
+        }
 
-          if (password !== confirmPassword) {
-            showMessage(
-              registerMessage,
-              "Konfirmasi password tidak sesuai!",
-              "error"
-            );
-            return;
-          }
+        if (password !== confirmPassword) {
+          showMessage(registerMessage, "Konfirmasi password tidak sesuai!", "error");
+          return;
+        }
 
-          // Set loading state
-          setLoading(submitBtn, true);
+        // Set loading state
+        setLoading(submitBtn, true);
 
-          // Simulate API call
-          setTimeout(() => {
-            setLoading(submitBtn, false);
-            showMessage(
-              registerMessage,
-              "Pendaftaran berhasil! Silakan login dengan akun Anda.",
-              "success"
-            );
+        try {
+          const response = await fetch('/register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': csrfToken,
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              name: name,
+              email: email,
+              password: password,
+              confirmPassword: confirmPassword
+            })
+          });
 
+          const data = await response.json();
+
+          if (response.ok && data.success) {
+            showMessage(registerMessage, data.message, "success");
             setTimeout(() => {
               registerModal.style.display = "none";
               this.reset();
-            }, 3000);
-          }, 1500);
-        });
-
-      // Forgot Password Form
-      document
-        .getElementById("forgotPasswordForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          const email = document.getElementById("resetEmail").value.trim();
-          const submitBtn = document.getElementById("forgotPasswordSubmit");
-
-          if (!email) {
-            showMessage(
-              forgotPasswordMessage,
-              "Harap masukkan alamat email!",
-              "error"
-            );
-            return;
+            }, 2000);
+          } else {
+            showMessage(registerMessage, data.message || "Pendaftaran gagal. Silakan coba lagi.", "error");
           }
+        } catch (error) {
+          console.error('Error:', error);
+          showMessage(registerMessage, "Terjadi kesalahan. Silakan coba lagi.", "error");
+        } finally {
+          setLoading(submitBtn, false);
+        }
+      });
 
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(email)) {
-            showMessage(
-              forgotPasswordMessage,
-              "Harap masukkan alamat email yang valid!",
-              "error"
-            );
-            return;
-          }
+      // Forgot Password Form (placeholder for future implementation)
+      document.getElementById("forgotPasswordForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        const email = document.getElementById("resetEmail").value.trim();
+        const submitBtn = document.getElementById("forgotPasswordSubmit");
 
-          // Set loading state
-          setLoading(submitBtn, true);
+        if (!email) {
+          showMessage(forgotPasswordMessage, "Harap masukkan alamat email!", "error");
+          return;
+        }
 
-          // Simulate API call
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          showMessage(forgotPasswordMessage, "Harap masukkan alamat email yang valid!", "error");
+          return;
+        }
+
+        setLoading(submitBtn, true);
+
+        // Placeholder - implement actual password reset later
+        setTimeout(() => {
+          setLoading(submitBtn, false);
+          showMessage(
+            forgotPasswordMessage,
+            "Link reset password telah dikirim ke email Anda!",
+            "success"
+          );
+
           setTimeout(() => {
-            setLoading(submitBtn, false);
-            showMessage(
-              forgotPasswordMessage,
-              "Link reset password telah dikirim ke email Anda!",
-              "success"
-            );
-
-            setTimeout(() => {
-              forgotPasswordModal.style.display = "none";
-              this.reset();
-            }, 3000);
-          }, 1500);
-        });
+            forgotPasswordModal.style.display = "none";
+            this.reset();
+          }, 3000);
+        }, 1500);
+      });
 
       // Real-time validation
       document.querySelectorAll("input").forEach((input) => {
@@ -1085,15 +970,6 @@ if(isset($_POST['login'])) {
             this.style.borderColor = "#f44336";
           }
         });
-      });
-
-      // Initialize feather icons when modals open
-      registerLink.addEventListener("click", function () {
-        setTimeout(() => feather.replace(), 100);
-      });
-
-      forgotPasswordLink.addEventListener("click", function () {
-        setTimeout(() => feather.replace(), 100);
       });
     </script>
   </body>

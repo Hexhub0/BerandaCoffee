@@ -6,23 +6,14 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Tampilkan dashboard admin
-     */
-    public function admin()
+    public function index()
     {
-        return view('admin.admin');
+        return view('admin');
     }
-    
-    /**
-     * Tampilkan halaman manajemen user
-     */
-    public function users()
+
+    public function transaksi()
     {
-        // Contoh: ambil semua user
-        $users = \App\Models\User::all();
-        return view('admin.users', compact('users'));
+        // Implementasi untuk halaman transaksi
+        return view('admin.transaksi');
     }
-    
-    // Tambahkan method lainnya sesuai kebutuhan
 }

@@ -266,30 +266,22 @@ function updateDateTime() {
 
 // Fungsi untuk logout
 async function logout() {
-    if (!confirm('Apakah Anda yakin ingin logout?')) {
-        return;
-    }
-    
-    try {
-        const response = await fetch(API_CONFIG.endpoints.logout, {
+   function logout() {
+    if (confirm('Apakah Anda yakin ingin logout?')) {
+        fetch('/logout', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        }).then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                window.location.href = '/login';
             }
         });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            window.location.href = '/login';
-        } else {
-            showAlert('error', result.message || 'Gagal logout');
         }
-    } catch (error) {
-        console.error('Error logging out:', error);
-        showAlert('error', 'Terjadi kesalahan saat logout');
     }
 }
 

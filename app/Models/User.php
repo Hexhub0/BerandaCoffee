@@ -2,45 +2,42 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use Notifiable;
 
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
-        'role', // TAMBAHKAN INI
+        'role',
     ];
 
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
-    // ===== TAMBAHKAN METHOD INI =====
-    
-    /**
-     * Cek apakah user adalah admin
-     */
+    // Method untuk cek apakah user adalah admin
     public function isAdmin()
     {
         return $this->role === 'admin';
     }
-    
-    /**
-     * Cek apakah user adalah user biasa
-     */
-    public function isUser()
+
+    // Tambahkan accessor untuk 'name' agar kompatibel dengan Laravel default
+    public function getNameAttribute()
     {
-        return $this->role === 'user';
+        return $this->attributes['nama'] ?? null;
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['nama'] = $value;
     }
 }
