@@ -16,16 +16,8 @@
     <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
 
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
-      <symbol id="heart" viewBox="0 0 24 24">
-        <path
-          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-        ></path>
-      </symbol>
-    </svg>
-
     <!-- My Style -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="css/style.css" />
 
     <!-- Alpine JS -->
     <script
@@ -34,132 +26,43 @@
     ></script>
 
     <!-- App -->
-    <script src="js/app.js" async></script>
+    <script src="src/app.js" async></script>
   </head>
   <body>
     <!-- Navbar -->
     <nav class="navbar" x-data>
-      <a href="#" class="navbar-logo">Beranda<span>Coffee</span>.</a>
+      <a href="index.html" class="navbar-logo">Beranda<span>Coffee</span>.</a>
 
       <div class="navbar-nav">
-        <a href="/home">Beranda</a>
+        <a href="#home">Beranda</a>
         <a href="#about">Tentang Kami</a>
-        <a href="/menu">Menu</a>
-        <a href="#products">Produk Kami</a>
+        <a href="menu.html">Menu</a>
+        <a href="products.html">Produk Kami</a>
         <a href="#contact">Kontak</a>
       </div>
 
       <div class="navbar-extra">
-        <a href="/login" id="login-button" class="login-btn">
-          <i data-feather="log-in"></i>
-          <span>Login</span>
-        </a>
-        <a href="#" id="search-button"><i data-feather="search"></i></a>
-        <a href="#" id="shopping-cart-button"
-          ><i data-feather="shopping-cart"></i
-          ><span
-            class="quantity-badge"
-            x-show="$store.cart.quantity"
-            x-text="$store.cart.quantity"
-          ></span
-        ></a>
-        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
-      </div>
-
-      <!-- Search Form start -->
-      <div class="search-form">
-        <input type="search" id="search-box" placeholder="Search Here..." />
-        <label for="search-box"><i data-feather="search"></i></label>
-      </div>
-      <!-- Search Form end -->
-
-      <!-- Shopping Cart start -->
-      <div class="shopping-cart">
-        <template x-for="(item, index) in $store.cart.items" x-keys="index">
-          <div class="cart-item">
-            <img
-              :src="`img/${item.imgPath || 'products'}/${item.img}`"
-              :alt="item.name"
-            />
-            <div class="item-detail">
-              <h3 x-text="item.name"></h3>
-              <div class="item-price">
-                <span x-text="$store.cart.rupiah(item.price)"></span> &times;
-                <button id="remove" @click="$store.cart.remove(item.id)">
-                  &minus;
-                </button>
-                <span x-text="item.quantity"></span>
-                <button id="add" @click="$store.cart.add(item)">&plus;</button>
-                &equals;
-                <span x-text="$store.cart.rupiah(item.total)"></span>
-              </div>
+        <!-- Profile Button -->
+        <div class="profile-dropdown">
+          <button class="profile-btn" id="profile-button">
+            <i data-feather="user"></i>
+          </button>
+          <div class="profile-dropdown-content" id="profile-dropdown">
+            <div class="profile-info">
+              <h4 id="profile-username">Guest User</h4>
+              <p id="profile-email">guest@example.com</p>
+            </div>
+            <div class="profile-actions">
+              <!-- Hanya logout yang tersisa -->
+              <a href="#" class="profile-action-item logout" id="logout-btn">
+                <i data-feather="log-out"></i>
+                <span>Log Out</span>
+              </a>
             </div>
           </div>
-        </template>
-
-        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem">
-          Keranjang Kosong
-        </h4>
-        <h4 x-show="$store.cart.items.length">
-          Total : <span x-text="$store.cart.rupiah($store.cart.total)"></span>
-        </h4>
-        <div class="form-container" x-show="$store.cart.items.length">
-          <form action="" id="checkoutForm">
-            <input
-              type="hidden"
-              name="items"
-              x-model="JSON.stringify($store.cart.items)"
-            />
-            <input type="hidden" name="total" x-model="$store.cart.total" />
-
-            <h5>Customer Detail</h5>
-
-            <label for="name">
-              <span>Name</span>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Your name"
-                required
-              />
-            </label>
-
-            <label for="email">
-              <span>Email</span>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="your@email.com"
-                required
-              />
-            </label>
-
-            <label for="phone">
-              <span>Phone</span>
-              <input
-                type="tel"
-                name="phone"
-                id="phone"
-                placeholder="Your phone number"
-                autocomplete="off"
-                required
-              />
-            </label>
-
-            <button
-              class="checkout-button disabled"
-              type="submit"
-              id="checkout-button"
-              value="checkout"
-            >
-              Checkout
-            </button>
-          </form>
         </div>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
       </div>
-      <!-- Shopping Cart end -->
     </nav>
     <!-- Navbar end -->
 
@@ -171,6 +74,10 @@
           Apapun suasana hati Kamu, kopi kami selalu siap menemani hari-hari mu
           dengan rasa yang tak terlupakan, dan cinta rasa di setiap tegukan nya.
         </p>
+        <a href="menu.html" class="cta-button">
+          <span>Lihat Menu</span>
+          <i data-feather="arrow-right"></i>
+        </a>
       </main>
     </section>
     <!-- Hero Section end -->
@@ -201,243 +108,222 @@
     </section>
     <!-- About Section end -->
 
-    <!-- Menu Section start -->
-    <section id="menu" class="menu" x-data="products">
-      <h2><span>Menu</span> Kami</h2>
-        <p>
-          Semoga menu kopi andalan kami dapat menemani hari-hari mu dan memberikan
-          kenikmatan yang tak terlupakan.
-        </p>
-
-        <div class="row">
-          <template x-for="item in sortedMenuItems" :key="item.id">
-            <div class="menu-card">
-              <div class="menu-card-header">
-                <img
-                  :src="`img/menu/${item.img}`"
-                  :alt="item.name"
-                  class="menu-card-img"
-                />
-
-                <div class="menu-card-actions">
-                  <!-- FAVORITE -->
-                  <a
-                    href="#"
-                    @click.prevent="$store.favorites.toggle(item, 'menu')"
-                    class="menu-action-btn favorite-btn"
-                    :class="{ 'favorited': $store.favorites.isFavorited(item, 'menu') }"
-                    :title="$store.favorites.isFavorited(item, 'menu')
-                    ? 'Hapus dari Favorit'
-                    : 'Tambah ke Favorit'"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      :fill="$store.favorites.isFavorited(item, 'menu')
-                      ? 'currentColor'
-                      : 'none'"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <use href="img/feather-sprite.svg#heart" />
-                    </svg>
-                  </a>
-
-                  <!-- CART -->
-                  <a
-                    href="#"
-                    @click.prevent="$store.cart.add(item)"
-                    class="menu-action-btn"
-                    title="Tambah ke Keranjang"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <use href="img/feather-sprite.svg#shopping-cart" />
-                    </svg>
-                  </a>
-
-                  <!-- DETAIL (TANPA DATA RATING) -->
-                  <a
-                    href="#"
-                    class="menu-action-btn item-detail-button"
-                    :data-id="item.id"
-                    :data-type="'menu'"
-                    :data-name="item.name"
-                    :data-desc="item.desc"
-                    :data-img="`img/menu/${item.img}`"
-                    :data-price="$store.cart.rupiah(item.price)"
-                    title="Lihat Detail"
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <use href="img/feather-sprite.svg#eye" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              <div class="menu-card-content">
-                <h3 class="menu-card-title" x-text="item.name"></h3>
-              <p class="menu-card-desc" x-text="item.desc"></p>
-
-              <!-- ⭐ RATING DISPLAY (READ ONLY) -->
-              <div class="menu-rating-section">
-                <div class="rating-stars">
-                  <template x-for="i in 5" :key="i">
-                    <svg
-                      width="14"
-                      height="14"
-                      :fill="i <= Math.round(
-                      $store.ratings.getAverageRating(item.id, 'menu')
-                      ) ? 'currentColor' : 'none'"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <use href="img/feather-sprite.svg#star" />
-                    </svg>
-                  </template>
-
-                  <span
-                    class="rating-text"
-                    x-text="'(' + $store.ratings.getRatingCount(item.id, 'menu') + ')'"
-                  ></span>
-                </div>
-              </div>
-
-              <div class="menu-card-footer">
-                <p
-                  class="menu-item-price"
-                  x-text="$store.cart.rupiah(item.price)"
-                ></p>
-              </div>
-            </div>
-          </div>
-        </template>
+    <!-- Promo Banner Section start -->
+    <section class="promo-banner">
+      <div class="promo-container">
+        <div class="promo-badge">
+          <i data-feather="zap"></i>
+          <span>Promo Spesial</span>
+        </div>
+        <h2>Diskon 20% Untuk Semua Menu Kopi!</h2>
+        <p>Berlaku setiap hari Senin - Jumat pukul 10.00 - 14.00</p>
+        <a href="menu.html" class="promo-btn">
+          <span>Pesan Sekarang</span>
+          <i data-feather="shopping-cart"></i>
+        </a>
       </div>
     </section>
-    <!-- Menu end -->
+    <!-- Promo Banner Section end -->
 
-    <!-- Products Section start -->
-    <section id="products" class="products" x-data="products">
-      <h2><span>Produk</span> Kami</h2>
-      <p>
-      Produk unggulan kami berupa biji kopi terbaik yang dipetik dari
-      perkebunan dataran tinggi, menghasilkan cita rasa yang kaya dan aroma
-      yang menggugah selera.
-      </p>
+    <!-- Featured Menu Section start -->
+    <section class="featured-menu">
+      <div class="section-header">
+        <h2>Menu <span>Terpopuler</span> Kami</h2>
+        <p>Pilihan terbaik yang paling disukai oleh pelanggan kami</p>
+      </div>
 
-      <div class="row">
-        <template x-for="item in sortedItems" :key="item.id">
-          <div class="product-card">
-            <div class="product-icons">
-              <!-- FAVORITE -->
-              <a
-                href="#"
-                @click.prevent="$store.favorites.toggle(item, 'product')"
-                class="favorite-btn"
-                :class="{ 'favorited': $store.favorites.isFavorited(item, 'product') }"
-                :title="$store.favorites.isFavorited(item, 'product')
-                ? 'Hapus dari Favorit'
-                : 'Tambah ke Favorit'"
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  :fill="$store.favorites.isFavorited(item, 'product')
-                    ? 'currentColor'
-                    : 'none'"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <use href="img/feather-sprite.svg#heart" />
-                </svg>
+      <div class="featured-grid">
+        <!-- Featured Item 1 -->
+        <div class="featured-card">
+          <div class="featured-image">
+            <img src="img/menu/1.jpg" alt="Espresso" />
+            <div class="featured-badge">Best Seller</div>
+            <div class="featured-overlay">
+              <a href="menu.html" class="overlay-btn">
+                <i data-feather="eye"></i>
+                <span>Lihat Detail</span>
               </a>
-
-              <!-- CART -->
-                <a href="#" @click.prevent="$store.cart.add(item)">
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <use href="img/feather-sprite.svg#shopping-cart" />
-                  </svg>
-                </a>
-
-                <!-- DETAIL (TANPA DATA RATING) -->
-                <a
-                  href="#"
-                  class="item-detail-button"
-                  :data-id="item.id"
-                  :data-type="'product'"
-                  :data-name="item.name"
-                  :data-desc="item.desc"
-                  :data-img="`img/products/${item.img}`"
-                  :data-price="$store.cart.rupiah(item.price)"
-                  title="Lihat Detail"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <use href="img/feather-sprite.svg#eye" />
-                  </svg>
-                </a>
-              </div>
-
-              <div class="product-image">
-                <img :src="`img/products/${item.img}`" :alt="item.name" />
-              </div>
-
-              <div class="product-content">
-                <h3 x-text="item.name"></h3>
-
-                <!-- ⭐ RATING DISPLAY (READ ONLY) -->
-                <div class="product-stars">
-                  <template x-for="i in 5" :key="i">
-                    <svg
-                      width="18"
-                      height="18"
-                      :fill="i <= Math.round(
-                      $store.ratings.getAverageRating(item.id, 'product')
-                      ) ? 'currentColor' : 'none'"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <use href="img/feather-sprite.svg#star" />
-                    </svg>
-                  </template>
-                </div>
-
-                <div
-                  class="rating-count"
-                  x-text="'(' + $store.ratings.getRatingCount(item.id, 'product') + ' rating)'"
-                ></div>
-
-                <div class="product-price">
-                  <span x-text="$store.cart.rupiah(item.price)"></span>
-                </div>
-              </div>
             </div>
-          </template>
+          </div>
+          <div class="featured-content">
+            <h3>Espresso</h3>
+            <div class="featured-rating">
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <span>(4.9)</span>
+            </div>
+            <p>Kopi murni dengan rasa kuat dan aroma yang khas</p>
+            <div class="featured-footer">
+              <span class="featured-price">Rp 15.000</span>
+              <a href="menu.html" class="order-btn">Pesan</a>
+            </div>
+          </div>
         </div>
-      </section>
-    <!-- Products Section end -->
+        <!-- Featured Item 2 -->
+        <div class="featured-card">
+          <div class="featured-image">
+            <img src="img/menu/2.jpg" alt="Latte" />
+            <div class="featured-badge popular">Popular</div>
+            <div class="featured-overlay">
+              <a href="menu.html" class="overlay-btn">
+                <i data-feather="eye"></i>
+                <span>Lihat Detail</span>
+              </a>
+            </div>
+          </div>
+          <div class="featured-content">
+            <h3>Latte Coffee</h3>
+            <div class="featured-rating">
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <span>(4.8)</span>
+            </div>
+            <p>Perpaduan sempurna espresso dan susu steamed</p>
+            <div class="featured-footer">
+              <span class="featured-price">Rp 20.000</span>
+              <a href="menu.html" class="order-btn">Pesan</a>
+            </div>
+          </div>
+        </div>
+        <!-- Featured Item 3 -->
+        <div class="featured-card">
+          <div class="featured-image">
+            <img src="img/menu/3.jpg" alt="Matcha" />
+            <div class="featured-badge new">New</div>
+            <div class="featured-overlay">
+              <a href="menu.html" class="overlay-btn">
+                <i data-feather="eye"></i>
+                <span>Lihat Detail</span>
+              </a>
+            </div>
+          </div>
+          <div class="featured-content">
+            <h3>Matcha Coffee</h3>
+            <div class="featured-rating">
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <i data-feather="star" class="star-filled"></i>
+              <span>(4.7)</span>
+            </div>
+            <p>Kombinasi unik matcha premium dengan kopi</p>
+            <div class="featured-footer">
+              <span class="featured-price">Rp 25.000</span>
+              <a href="menu.html" class="order-btn">Pesan</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="view-all-container">
+        <a href="menu.html" class="view-all-btn">
+          <span>Lihat Semua Menu</span>
+          <i data-feather="arrow-right"></i>
+        </a>
+      </div>
+    </section>
+    <!-- Featured Menu Section end -->
+
+    <!-- Categories Showcase start -->
+    <section class="categories-showcase">
+      <div class="section-header">
+        <span class="section-tag">Kategori Menu</span>
+        <h2>Jelajahi <span>Kategori</span> Kami</h2>
+        <p>Temukan berbagai pilihan menu sesuai selera Anda</p>
+      </div>
+
+      <div class="categories-grid">
+        <div class="category-card coffee">
+          <div class="category-icon">
+            <i data-feather="coffee"></i>
+          </div>
+          <h3>Kopi</h3>
+          <p>15+ Varian Kopi</p>
+          <span class="category-desc"
+            >Dari espresso hingga specialty coffee</span
+          >
+          <!-- Link dengan parameter category=coffee -->
+          <a href="menu.html?category=coffee" class="category-card">
+            <h3>Kopi</h3>
+          </a>
+        </div>
+        <div class="category-card snack">
+          <div class="category-icon">
+            <i data-feather="package"></i>
+          </div>
+          <h3>Snack</h3>
+          <p>10+ Pilihan Snack</p>
+          <span class="category-desc">Camilan lezat teman ngopi</span>
+          <!-- Link dengan parameter category=snack -->
+          <a href="menu.html?category=snack" class="category-card">
+            <h3>Snack</h3>
+          </a>
+        </div>
+        <div class="category-card dessert">
+          <div class="category-icon">
+            <i data-feather="award"></i>
+          </div>
+          <h3>Dessert</h3>
+          <p>8+ Dessert Premium</p>
+          <span class="category-desc">Penutup manis yang sempurna</span>
+          <!-- Link dengan parameter category=dessert -->
+          <a href="menu.html?category=dessert" class="category-card">
+            <h3>Dessert</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- Categories Showcase end -->
+
+    <!-- Special Offer Section start -->
+    <section class="special-offer">
+      <div class="offer-content">
+        <div class="offer-left">
+          <span class="offer-tag">Penawaran Terbatas</span>
+          <h2>Paket Hemat Coffee & Snack</h2>
+          <p>Dapatkan 1 kopi pilihan + 1 snack favorit dengan harga spesial!</p>
+          <div class="offer-features">
+            <div class="feature-item">
+              <i data-feather="check-circle"></i>
+              <span>Hemat hingga Rp 10.000</span>
+            </div>
+            <div class="feature-item">
+              <i data-feather="check-circle"></i>
+              <span>Bisa pilih semua menu</span>
+            </div>
+            <div class="feature-item">
+              <i data-feather="check-circle"></i>
+              <span>Berlaku setiap hari</span>
+            </div>
+          </div>
+          <div class="offer-price">
+            <span class="old-price">Rp 35.000</span>
+            <span class="new-price">Rp 25.000</span>
+          </div>
+          <a href="menu.html" class="offer-cta">
+            <span>Ambil Penawaran</span>
+            <i data-feather="arrow-right"></i>
+          </a>
+        </div>
+        <div class="offer-right">
+          <div class="offer-image">
+            <img src="img/menu/4.jpg" alt="Special Offer" />
+            <div class="offer-floating-badge">
+              <span class="discount">-22%</span>
+              <span class="label">OFF</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Special Offer Section end -->
 
     <!-- Contact Section start -->
     <section id="contact" class="contact">
@@ -488,7 +374,6 @@
               </button>
             </form>
           </div>
-
           <div class="map-container">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.184885024379!2d112.71637438561984!3d-7.333122273329611!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb7aa0e99023%3A0xc98468576e20f7fc!2sBeranda%20Kita%20(Kos%20dan%20Kedai%20Kopi)!5e0!3m2!1sid!2sid!4v1763293534996!5m2!1sid!2sid"
@@ -521,18 +406,23 @@
           <ul>
             <li><a href="#home">Beranda</a></li>
             <li><a href="#about">Tentang Kami</a></li>
-            <li><a href="#menu">Menu</a></li>
-            <li><a href="#products">Produk Kami</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="products.html">Produk Kami</a></li>
             <li><a href="#contact">Kontak</a></li>
           </ul>
         </div>
         <div class="footer-col">
-          <h3>Situs</h3>
+          <h3>Coffee Blogs</h3>
           <ul>
-            <li><a href="#">Coffee Shop</a></li>
-            <li><a href="#">Premium Beans</a></li>
-            <li><a href="#">Brew Academy</a></li>
-            <li><a href="#">Coffee Blogs</a></li>
+            <li><a href="https://coffeeland.co.id/">Coffee Land</a></li>
+            <li>
+              <a
+                href="https://ottencoffee.co.id/brands/otten-coffee?categoryIds=%5B382%5D&page=1&msclkid=3ec953538edf1f658bef3a1a20752ed1"
+                >Otten Coffee</a
+              >
+            </li>
+            <li><a href="https://www.baristahustle.com/">Barista Hustle</a></li>
+            <li><a href="https://sprudge.com/">Sprudge</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -553,137 +443,51 @@
     </footer>
     <!-- Footer end -->
 
-    <!-- Modal Box Item Detail start -->
-    <div class="modal" id="item-detail-modal">
-      <div class="modal-container">
-        <button type="button" class="close-icon" style="background-color: white;">✕</button>
-        <div class="modal-content">
-          <img src="img/Products/1.jpg" alt="Product 1" />
-          <div class="product-content">
-            <h3>Product 1</h3>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe,
-              sint quam! Debitis aliquam totam fuga officiis optio voluptas
-              ipsum earum beatae, sunt ut, soluta sed!
-            </p>
-            <div class="product-stars">
-              <i data-feather="star" class="star-full"></i>
-              <i data-feather="star" class="star-full"></i>
-              <i data-feather="star" class="star-full"></i>
-              <i data-feather="star" class="star-full"></i>
-              <i data-feather="star" class="star-full"></i>
-            </div>
-            <div class="rating-info">
-              <span>(0 rating)</span>
-            </div>
-
-            <!-- Rating Section di Modal -->
-            <div class="modal-rating-section">
-              <span
-                style="
-                  font-size: 1rem;
-                  color: #666;
-                  display: block;
-                  margin-bottom: 0.5rem;
-                "
-                >Beri Rating Anda:</span
-              >
-              <div class="rate-stars" style="justify-content: flex-start">
-                <svg
-                  width="20"
-                  height="20"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  class="rate-star modal-rate-star"
-                  data-rating="1"
-                >
-                  <use href="img/feather-sprite.svg#star" />
-                </svg>
-                <svg
-                  width="20"
-                  height="20"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  class="rate-star modal-rate-star"
-                  data-rating="2"
-                >
-                  <use href="img/feather-sprite.svg#star" />
-                </svg>
-                <svg
-                  width="20"
-                  height="20"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  class="rate-star modal-rate-star"
-                  data-rating="3"
-                >
-                  <use href="img/feather-sprite.svg#star" />
-                </svg>
-                <svg
-                  width="20"
-                  height="20"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  class="rate-star modal-rate-star"
-                  data-rating="4"
-                >
-                  <use href="img/feather-sprite.svg#star" />
-                </svg>
-                <svg
-                  width="20"
-                  height="20"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  class="rate-star modal-rate-star"
-                  data-rating="5"
-                >
-                  <use href="img/feather-sprite.svg#star" />
-                </svg>
-              </div>
-            </div>
-
-            <div class="product-price">IDR 30K</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal Box Item Detail end -->
-
     <script>
       feather.replace();
 
-      // Form submission handling
-      document
-        .getElementById("ulasanForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+      // Script sederhana untuk filter otomatis
+      document.addEventListener("DOMContentLoaded", function () {
+        // Fungsi baca parameter URL
+        function getParameterByName(name) {
+          const url = window.location.href;
+          name = name.replace(/[\[\]]/g, "\\$&");
+          const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+          const results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return "";
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
 
-          const name = document.getElementById("ulasanName").value.trim();
-          const email = document.getElementById("ulasanEmail").value.trim();
-          const message = document.getElementById("ulasanText").value.trim();
+        // Ambil parameter category
+        const category = getParameterByName("category");
 
-          if (!name || !email || !message) {
-            alert("Harap lengkapi semua field sebelum mengirim ulasan.");
-            return;
-          }
+        if (category && ["coffee", "snack", "dessert"].includes(category)) {
+          console.log("Auto-filter category:", category);
 
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(email)) {
-            alert("Harap masukkan alamat email yang valid.");
-            return;
-          }
+          // Klik button kategori yang sesuai
+          setTimeout(() => {
+            const categoryBtn = document.querySelector(
+              `.category-btn[onclick*="selectedCategory = '${category}'"]`
+            );
+            if (categoryBtn) {
+              categoryBtn.click();
+              console.log("Category button clicked:", category);
+            }
 
-          alert("Terima kasih! Ulasan Anda telah berhasil dikirim.");
-          this.reset();
-        });
+            // Scroll ke section menu
+            const menuSection = document.getElementById("menu");
+            if (menuSection) {
+              setTimeout(() => {
+                menuSection.scrollIntoView({ behavior: "smooth" });
+              }, 100);
+            }
+          }, 500);
+        }
+      });
     </script>
 
     <!-- My Javascript -->
-    <script src="/js/script.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>

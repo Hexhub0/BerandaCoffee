@@ -646,11 +646,6 @@ if(isset($_POST['login'])) {
             Belum punya akun?
             <a href="#" class="login-link" id="registerLink">Daftar di sini</a>
           </p>
-
-          <a href="/" class="back-to-home">
-            <i data-feather="arrow-left"></i>
-            Kembali ke Beranda
-          </a>
         </div>
       </div>
     </div>

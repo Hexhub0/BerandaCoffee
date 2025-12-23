@@ -15,6 +15,14 @@ Route::get('/menu', function () {
     return view('menu');
 })->name('menu');
 
+Route::get('/order', function () {
+    return view('order-history');
+})->name('order history');
+
+Route::get('/checkout', function () {
+    return view('checkout');
+})->name('checkout');
+
 
 Route::get('/admin', function () {
     return view('admin.admin');
