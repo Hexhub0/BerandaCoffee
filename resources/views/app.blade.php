@@ -639,32 +639,6 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="regPhone">Nomor Telepon</label>
-              <div class="input-with-icon">
-                <input
-                  type="tel"
-                  id="regPhone"
-                  name="phone"
-                  placeholder="08xxxxxxxxxx"
-                  required
-                  autocomplete="tel"
-                  pattern="[0-9]{10,13}"
-                />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="regAddress">Alamat Lengkap</label>
-              <div class="input-with-icon textarea-icon">
-                <textarea
-                  id="regAddress"
-                  name="address"
-                  placeholder="Masukkan alamat lengkap Anda"
-                  required
-                  autocomplete="street-address"
-                ></textarea>
-              </div>
-            </div>
-            <div class="form-group">
               <label for="regPassword">Password</label>
               <div class="input-with-icon">
                 <input
