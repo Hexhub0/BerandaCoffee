@@ -916,7 +916,7 @@
             );
 
             setTimeout(() => {
-              window.location.href = "/home";
+              window.location.href = "{{ route('home') }}";
             }, 2000);
           }, 1500);
         });
